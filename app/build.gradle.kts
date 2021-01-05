@@ -54,6 +54,7 @@ dependencies {
     implementation(Jetpack.Navigation.featureModule)
     implementation(Jetpack.Navigation.fragment)
     implementation(Jetpack.Navigation.ui)
+    implementation("com.kirich1409.viewbindingpropertydelegate:vbpd-noreflection:1.4.0")
 
     kapt(Dagger.androidProcessor)
     kapt(Dagger.compiler)
