@@ -57,6 +57,13 @@ object Kotlin {
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${App.kotlinVersion}"
 }
 
+object Moshi {
+    object Version {
+        const val codegen = "1.11.0"
+    }
+    const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:${Version.codegen}"
+}
+
 object Retrofit {
     object Version {
         const val retrofit = "2.9.0"

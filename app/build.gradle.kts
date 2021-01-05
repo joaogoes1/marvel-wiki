@@ -54,6 +54,7 @@ dependencies {
     implementation(Jetpack.Navigation.featureModule)
     implementation(Jetpack.Navigation.fragment)
     implementation(Jetpack.Navigation.ui)
+    implementation(Moshi.codegen)
     implementation(Retrofit.retrofit)
     implementation(ViewBinding.noReflection)
 
