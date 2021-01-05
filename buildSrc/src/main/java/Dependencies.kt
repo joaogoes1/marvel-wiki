@@ -46,10 +46,10 @@ object Jetpack {
             const val navigation = "2.3.2"
         }
 
-        const val fragment = "androidx.navigation:navigation-fragment-ktx:$${Version.navigation}"
-        const val ui = "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
-        const val featureModule =
-            "androidx.navigation:navigation-dynamic-features-fragment:${Version.navigation}"
+        private const val base = "androidx.navigation"
+        const val fragment = "$base:navigation-fragment-ktx:$${Version.navigation}"
+        const val ui = "$base:navigation-ui-ktx:${Version.navigation}"
+        const val featureModule = "$base:navigation-dynamic-features-fragment:${Version.navigation}"
     }
 }
 
@@ -61,6 +61,7 @@ object Moshi {
     object Version {
         const val codegen = "1.11.0"
     }
+
     const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:${Version.codegen}"
 }
 
@@ -69,7 +70,9 @@ object Retrofit {
         const val retrofit = "2.9.0"
     }
 
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Version.retrofit}"
+    private const val base = "com.squareup.retrofit2"
+    const val retrofit = "$base:retrofit:${Version.retrofit}"
+    const val moshiConverter = "$base:converter-moshi:${Version.retrofit}"
 }
 
 object ViewBinding {
