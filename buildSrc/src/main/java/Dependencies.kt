@@ -64,6 +64,15 @@ object MaterialComponents {
     const val material = "com.google.android.material:material:${Version.material}"
 }
 
+object ViewBinding {
+    object Version {
+        const val viewBinding = "1.4.0"
+    }
+
+    private const val viewBinding = "com.kirich1409.viewbindingpropertydelegate"
+    const val noReflection = "$viewBinding:vbpd-noreflection:${Version.viewBinding}"
+}
+
 object Test {
     object JUnit {
         object Version {
