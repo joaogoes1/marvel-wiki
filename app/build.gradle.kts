@@ -56,6 +56,7 @@ dependencies {
     implementation(Jetpack.Navigation.ui)
     implementation(Moshi.codegen)
     implementation(Retrofit.retrofit)
+    implementation(Retrofit.moshiConverter)
     implementation(ViewBinding.noReflection)
 
     kapt(Dagger.androidProcessor)
