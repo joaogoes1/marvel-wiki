@@ -18,13 +18,14 @@ object AndroidX {
         const val core = "1.3.2"
         const val appCompat = "1.2.0"
         const val constraintLayout = "2.0.4"
+        const val cardView = "1.0.0"
     }
 
-    private const val androidx = "androidx"
-    const val core = "$androidx.core:core-ktx:${Version.core}"
-    const val appCompat = "$androidx.appcompat:appcompat:${Version.appCompat}"
+    const val core = "androidx.core:core-ktx:${Version.core}"
+    const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
     const val constraintLayout =
-        "$androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
+        "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
+    const val cardView = "androidx.cardview:cardview:${Version.cardView}"
 }
 
 object Dagger {
@@ -56,12 +57,12 @@ object Kotlin {
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${App.kotlinVersion}"
 }
 
-object MaterialComponents {
+object Retrofit {
     object Version {
-        const val material = "1.2.1"
+        const val retrofit = "2.9.0"
     }
 
-    const val material = "com.google.android.material:material:${Version.material}"
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Version.retrofit}"
 }
 
 object ViewBinding {
