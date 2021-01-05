@@ -1,9 +1,9 @@
-package com.joaogoes.marvelwiki
+package com.joaogoes.marvelwiki.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.joaogoes.marvelwiki.R
 import com.joaogoes.marvelwiki.di.Injectable
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), Injectable {
 

@@ -1,6 +1,6 @@
 package com.joaogoes.marvelwiki.di
 
-import com.joaogoes.marvelwiki.MainActivity
+import com.joaogoes.marvelwiki.presentation.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
