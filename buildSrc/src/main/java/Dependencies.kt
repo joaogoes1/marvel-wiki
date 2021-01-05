@@ -37,13 +37,16 @@ object MaterialComponents {
     const val material = "com.google.android.material:material:${Version.material}"
 }
 
-object Dagger{
+object Dagger {
     object Version {
         const val dagger = "2.30.1"
     }
-    const val dagger = "com.google.dagger:dagger:${Version.dagger}"
-    const val androidProcessor = "com.google.dagger:dagger-android-processor:${Version.dagger}"
-    const val compiler = "com.google.dagger:dagger-compiler:${Version.dagger}"
+
+    private const val dagger = "com.google.dagger"
+    const val android = "$dagger:dagger-android:${Version.dagger}"
+    const val androidSupport = "$dagger:dagger-android-support:${Version.dagger}"
+    const val androidProcessor = "$dagger:dagger-android-processor:${Version.dagger}"
+    const val compiler = "$dagger:dagger-compiler:${Version.dagger}"
 }
 
 object Test {
