@@ -9,10 +9,8 @@ object App {
     const val applicationId = "com.joaogoes.marvelwiki"
     const val gradleBuildTools = "com.android.tools.build:gradle:4.1.1"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-}
-
-object Kotlin {
-    const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${App.kotlinVersion}"
+    const val safeArgsGradlePlugin =
+        "androidx.navigation:navigation-safe-args-gradle-plugin:${Jetpack.Navigation.Version.navigation}"
 }
 
 object AndroidX {
@@ -29,14 +27,6 @@ object AndroidX {
         "$androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
 }
 
-object MaterialComponents {
-    object Version {
-        const val material = "1.2.1"
-    }
-
-    const val material = "com.google.android.material:material:${Version.material}"
-}
-
 object Dagger {
     object Version {
         const val dagger = "2.30.1"
@@ -49,6 +39,31 @@ object Dagger {
     const val compiler = "$dagger:dagger-compiler:${Version.dagger}"
 }
 
+object Jetpack {
+    object Navigation {
+        object Version {
+            const val navigation = "2.3.2"
+        }
+
+        const val fragment = "androidx.navigation:navigation-fragment-ktx:$${Version.navigation}"
+        const val ui = "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
+        const val featureModule =
+            "androidx.navigation:navigation-dynamic-features-fragment:${Version.navigation}"
+    }
+}
+
+object Kotlin {
+    const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${App.kotlinVersion}"
+}
+
+object MaterialComponents {
+    object Version {
+        const val material = "1.2.1"
+    }
+
+    const val material = "com.google.android.material:material:${Version.material}"
+}
+
 object Test {
     object JUnit {
         object Version {
@@ -58,6 +73,11 @@ object Test {
 
         const val jUnit = "junit:junit:${Version.jUnit}"
         const val testExt = "androidx.test.ext:junit:${Version.testExt}"
+    }
+
+    object NavigationComponent {
+        const val test =
+            "androidx.navigation:navigation-testing:${Jetpack.Navigation.Version.navigation}"
     }
 
     object Espresso {
