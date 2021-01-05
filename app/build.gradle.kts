@@ -45,7 +45,8 @@ dependencies {
     implementation(AndroidX.appCompat)
     implementation(MaterialComponents.material)
     implementation(AndroidX.constraintLayout)
-    implementation(Dagger.dagger)
+    implementation(Dagger.android)
+    implementation(Dagger.androidSupport)
 
     kapt(Dagger.androidProcessor)
     kapt(Dagger.compiler)
