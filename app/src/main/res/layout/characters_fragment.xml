@@ -37,5 +37,10 @@
             android:id="@+id/loading_state"
             layout="@layout/loading_state"
             android:visibility="gone" />
+
+        <include
+            android:id="@+id/no_connection_state"
+            layout="@layout/no_connection_state"
+            android:visibility="gone" />
     </FrameLayout>
 </layout>

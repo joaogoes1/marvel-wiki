@@ -1,5 +1,8 @@
 package com.joaogoes.marvelwiki.di
 
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import com.joaogoes.marvelwiki.data.api.CharacterApi
 import com.joaogoes.marvelwiki.data.api.MarvelService
 import com.squareup.moshi.Moshi
@@ -18,9 +21,14 @@ class NetworkModule {
     fun provideMoshi(): Moshi = Moshi.Builder().build()
 
     @Provides
-    fun provideRetrofit(moshi: Moshi): Retrofit = MarvelService.createRetrofit(moshi)
+    fun provideRetrofit(marvelService: MarvelService, moshi: Moshi): Retrofit = marvelService.createRetrofit(moshi)
 
     @Provides
     fun provideCharacterApi(retrofit: Retrofit): CharacterApi =
         retrofit.create(CharacterApi::class.java)
+
+    @Provides
+    fun provideConectivityManager(application: Application): ConnectivityManager =
+        application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
 }

@@ -2,5 +2,6 @@
     <string name="app_name">Marvel Wiki</string>
     <string name="empty_state_text">Nada por aqui!</string>
     <string name="error_state_text">Ops! Um erro aconteceu</string>
+    <string name="no_connection_state_text">Parece que vc está sem conexão</string>
     <string name="try_again">Tentar de novo</string>
 </resources>

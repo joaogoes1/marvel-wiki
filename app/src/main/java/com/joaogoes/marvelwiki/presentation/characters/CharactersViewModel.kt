@@ -3,6 +3,7 @@ package com.joaogoes.marvelwiki.presentation.characters
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joaogoes.marvelwiki.data.model.CharacterModel
+import com.joaogoes.marvelwiki.data.repository.ServiceError
 import com.joaogoes.marvelwiki.domain.GetCharactersUseCase
 import com.joaogoes.marvelwiki.domain.RemoveSavedFavoriteUseCase
 import com.joaogoes.marvelwiki.domain.SaveFavoriteUseCase
@@ -31,8 +32,10 @@ class CharactersViewModel @Inject constructor(
                     }
                 }
                 .onError { error ->
-                    // TODO: Handle network error
-                    viewState.state.postValue(ERROR)
+                    if (error is ServiceError.NoConnectionError)
+                        viewState.state.postValue(NO_CONNECTION)
+                    else
+                        viewState.state.postValue(ERROR)
                 }
         }
     }

@@ -6,8 +6,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
-object MarvelService {
+class MarvelService @Inject constructor(
+    private val connectionInterceptor: ConnectionInterceptor
+) {
 
     fun createRetrofit(moshi: Moshi): Retrofit {
 
@@ -19,6 +22,7 @@ object MarvelService {
                     privateKey = BuildConfig.PRIVATE_KEY
                 )
             )
+            .addInterceptor(connectionInterceptor)
 
         if (BuildConfig.DEBUG) {
             val interceptor = HttpLoggingInterceptor()
