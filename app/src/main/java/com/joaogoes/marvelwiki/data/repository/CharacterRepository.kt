@@ -1,21 +1,19 @@
 package com.joaogoes.marvelwiki.data.repository
 
 import com.joaogoes.marvelwiki.data.Result
-import com.joaogoes.marvelwiki.data.api.CharacterApi
 import com.joaogoes.marvelwiki.data.database.entity.CharacterEntity
 import com.joaogoes.marvelwiki.data.datasource.DatabaseError
 import com.joaogoes.marvelwiki.data.datasource.LocalDataSource
 import com.joaogoes.marvelwiki.data.datasource.RemoteDataSource
 import com.joaogoes.marvelwiki.data.model.*
 import com.joaogoes.marvelwiki.data.response.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface CharacterRepository {
     suspend fun getCharacters(): Result<List<CharacterModel>, ServiceError>
     suspend fun saveFavorite(character: CharacterModel): Result<Unit, DatabaseError>
     suspend fun removeSavedFavorite(character: CharacterModel): Result<Unit, DatabaseError>
+    suspend fun getCharacter(characterId: Int): Result<CharacterModel, ServiceError>
 }
 
 class CharacterRepositoryImpl @Inject constructor(
@@ -52,11 +50,23 @@ class CharacterRepositoryImpl @Inject constructor(
         return localDataSource.saveFavorite(entity)
     }
 
+    override suspend fun getCharacter(characterId: Int): Result<CharacterModel, ServiceError> =
+        when (val result = remoteDataSource.getCharacter(characterId)) {
+            is Result.Success -> {
+                val item = result.value.data?.results?.get(0)
+                if (result.value.code == 404 || item == null)
+                    Result.Error(ServiceError.NotFoundError)
+                else
+                    Result.Success(item.toModel())
+            }
+            is Result.Error -> result
+        }
 }
 
 sealed class ServiceError {
     object NetworkError : ServiceError()
-    object NoConnectionError: ServiceError()
+    object NoConnectionError : ServiceError()
+    object NotFoundError : ServiceError()
     object UnknownError : ServiceError()
 }
 
@@ -77,7 +87,11 @@ fun CharacterResponse.toModel() = CharacterModel(
 
 fun URL.toCharacterUrl() = CharacterUrl(type, url)
 
-fun Image.toUrlString() = if (path == null || extension == null) null else "$path.$extension".replace("http://", "https://")
+fun Image.toUrlString() =
+    if (path == null || extension == null) null else "$path.$extension".replace(
+        "http://",
+        "https://"
+    )
 
 fun ComicSummary.toModel() = ComicModel(resourceURI, name)
 

@@ -1,4 +1,4 @@
-package com.joaogoes.marvelwiki.data.api
+package com.joaogoes.marvelwiki.data.service
 
 import com.joaogoes.marvelwiki.BuildConfig
 import com.squareup.moshi.Moshi

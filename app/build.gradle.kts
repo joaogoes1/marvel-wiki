@@ -52,6 +52,7 @@ android {
     }
     packagingOptions {
         pickFirst("META-INF/*")
+        pickFirst("**/META-INF/MANIFEST.MF")
     }
 }
 dependencies {

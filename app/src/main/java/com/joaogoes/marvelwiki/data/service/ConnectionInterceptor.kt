@@ -1,8 +1,7 @@
-package com.joaogoes.marvelwiki.data.api
+package com.joaogoes.marvelwiki.data.service
 
 import android.net.ConnectivityManager
 import okhttp3.Interceptor
-import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
