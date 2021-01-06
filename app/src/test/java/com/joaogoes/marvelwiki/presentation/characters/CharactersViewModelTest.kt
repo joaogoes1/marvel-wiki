@@ -1,42 +1,69 @@
 package com.joaogoes.marvelwiki.presentation.characters
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import com.joaogoes.marvelwiki.data.Result
 import com.joaogoes.marvelwiki.data.model.CharacterModel
-import com.joaogoes.marvelwiki.data.response.CharacterApiResponse
 import com.joaogoes.marvelwiki.data.repository.ServiceError
 import com.joaogoes.marvelwiki.domain.GetCharactersUseCase
+import com.joaogoes.marvelwiki.utils.MainCoroutineRule
+import com.joaogoes.marvelwiki.utils.getOrAwaitValue
 import io.mockk.coEvery
+import io.mockk.coVerifySequence
 import io.mockk.mockk
-import kotlinx.coroutines.CoroutineDispatcher
+import io.mockk.verifySequence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.yield
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
-import kotlin.coroutines.ContinuationInterceptor
 
+@ExperimentalCoroutinesApi
 class CharactersViewModelTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @ExperimentalCoroutinesApi
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
     private val getCharactersUseCase = mockk<GetCharactersUseCase>()
     private val viewModel = CharactersViewModel(getCharactersUseCase)
+
+    @Test
+    fun `When load characters, if return a list, show success state`() {
+        val charactersList = listOf(
+            makeEmptyCharacter(),
+            makeEmptyCharacter()
+        )
+        prepareScenario(Result.Success(charactersList))
+
+        viewModel.loadCharacters()
+
+        viewModel.viewState.state.observeForever {}
+        viewModel.viewState.characters.observeForever {}
+        val state = viewModel.viewState.state.getOrAwaitValue()
+        val list = viewModel.viewState.characters.getOrAwaitValue()
+
+        assertEquals(CharactersViewState.State.SUCCESS, state)
+        assertEquals(charactersList, list)
+    }
+
+    @Test
+    fun `When load characters, if return empty list, show empty state`() {
+        prepareScenario(Result.Success(emptyList()))
+
+        viewModel.loadCharacters()
+
+        viewModel.viewState.state.observeForever {}
+        viewModel.viewState.characters.observeForever {}
+        val state = viewModel.viewState.state.getOrAwaitValue()
+        val list = viewModel.viewState.characters.getOrAwaitValue()
+
+        assertEquals(CharactersViewState.State.EMPTY_STATE, state)
+        assertEquals(0, list.size)
+    }
 
     @Test
     fun `When load characters, if return Error, set error state`() {
@@ -48,50 +75,13 @@ class CharactersViewModelTest {
         assertEquals(viewModel.viewState.state.getOrAwaitValue(), CharactersViewState.State.ERROR)
     }
 
+    private fun makeEmptyCharacter() = CharacterModel(
+        null, null, null, null, emptyList(), null, emptyList(), emptyList(), emptyList(), emptyList()
+    )
+
     private fun prepareScenario(
         result: Result<List<CharacterModel>, ServiceError>
     ) {
         coEvery { getCharactersUseCase.invoke() } returns result
-    }
-}
-
-/* Copyright 2019 Google LLC.
-   SPDX-License-Identifier: Apache-2.0 */
-fun <T> LiveData<T>.getOrAwaitValue(
-    time: Long = 2,
-    timeUnit: TimeUnit = TimeUnit.SECONDS
-): T {
-    var data: T? = null
-    val latch = CountDownLatch(1)
-    val observer = object : Observer<T> {
-        override fun onChanged(o: T?) {
-            data = o
-            latch.countDown()
-            this@getOrAwaitValue.removeObserver(this)
-        }
-    }
-
-    this.observeForever(observer)
-
-    // Don't wait indefinitely if the LiveData is not set.
-    if (!latch.await(time, timeUnit)) {
-        throw TimeoutException("LiveData value was never set.")
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    return data as T
-}
-
-@ExperimentalCoroutinesApi
-class MainCoroutineRule : TestWatcher(), TestCoroutineScope by TestCoroutineScope() {
-
-    override fun starting(description: Description?) {
-        super.starting(description)
-        Dispatchers.setMain(this.coroutineContext[ContinuationInterceptor] as CoroutineDispatcher)
-    }
-
-    override fun finished(description: Description?) {
-        super.finished(description)
-        Dispatchers.resetMain()
     }
 }
