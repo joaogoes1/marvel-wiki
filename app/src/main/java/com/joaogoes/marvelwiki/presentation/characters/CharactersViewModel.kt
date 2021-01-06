@@ -4,17 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joaogoes.marvelwiki.data.model.CharacterResponse
 import com.joaogoes.marvelwiki.domain.GetCharactersUseCase
-import com.joaogoes.marvelwiki.presentation.characters.CharactersViewState.State.LOADING
-import com.joaogoes.marvelwiki.presentation.characters.CharactersViewState.State.SUCCESS
-import com.joaogoes.marvelwiki.presentation.characters.CharactersViewState.State.ERROR
-import com.joaogoes.marvelwiki.presentation.characters.CharactersViewState.State.EMPTY_STATE
+import com.joaogoes.marvelwiki.presentation.characters.CharactersViewState.State.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CharactersViewModel @Inject constructor(
-    private val getCharacters: GetCharactersUseCase
+    private val getCharacters: GetCharactersUseCase,
 ) : ViewModel() {
-    val viewState = CharactersViewState()
+    val viewState: CharactersViewState = CharactersViewState()
 
     fun loadCharacters() {
         viewModelScope.launch {
@@ -31,7 +28,7 @@ class CharactersViewModel @Inject constructor(
                     }
                 }
                 .onError { error ->
-                    // TODO: Handle error
+                    // TODO: Handle network error
                     viewState.state.postValue(ERROR)
                 }
         }
@@ -39,10 +36,15 @@ class CharactersViewModel @Inject constructor(
 
     private fun CharacterResponse.toCharacterItemUiModel(): List<CharactersItemUiModel> =
         data?.results?.map { character ->
+            val imageUrlHttp =
+                character.thumbnail?.path?.let { "$it.${character.thumbnail.extension}" }
+
+            // This is needed because API 28 or higher disable cleartext traffic (http) by default
+            val imageUrl = imageUrlHttp?.replace("http://", "https://")
+
             CharactersItemUiModel(
                 name = character.name ?: "",
-                imageUrl = character.thumbnail?.path?.let { it + character.thumbnail.extension }
-                    ?: ""
+                imageUrl = imageUrl
             )
         } ?: emptyList()
 }

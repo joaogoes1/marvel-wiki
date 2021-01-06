@@ -53,7 +53,6 @@ android {
         pickFirst("META-INF/*")
     }
 }
-
 dependencies {
     implementation(Kotlin.kotlinStdLib)
     implementation(AndroidX.core)
@@ -62,6 +61,7 @@ dependencies {
     implementation(AndroidX.constraintLayout)
     implementation(AndroidX.fragment)
     implementation(OkHttp.core)
+    implementation(Glide.core)
     implementation(OkHttp.loggingInterceptor)
     implementation(Dagger.android)
     implementation(Dagger.androidSupport)
@@ -75,7 +75,9 @@ dependencies {
 
     kapt(Dagger.androidProcessor)
     kapt(Dagger.compiler)
+    kapt(Glide.compiler)
 
+    testImplementation(Test.Mockk.mockk)
     testImplementation(Test.OkHttpTest.mockWebServer)
     testImplementation(Test.JUnit.jUnit)
     androidTestImplementation(Test.JUnit.testExt)

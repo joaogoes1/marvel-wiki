@@ -7,7 +7,7 @@ buildscript {
         maven { url = uri("https://jitpack.io") }
     }
     dependencies {
-        classpath(App.gradleBuildTools)
+        classpath(App.androidGradlePlugin)
         classpath(App.kotlinGradlePlugin)
         classpath(App.safeArgsGradlePlugin)
         // NOTE: Do not place your application dependencies here; they belong
