@@ -36,6 +36,7 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
         })
         viewModel.viewState.state.observe(viewLifecycleOwner, { state ->
             binding.swipeToRefresh.isRefreshing = false
+            hideAll()
             when (state) {
                 CharactersViewState.State.EMPTY_STATE -> showEmptyState()
                 CharactersViewState.State.SUCCESS -> showSuccessState()
@@ -47,26 +48,14 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
     }
 
     private fun showSuccessState() {
-        binding.emptyState.root.visibility = View.GONE
-        binding.errorState.root.visibility = View.GONE
-        binding.loadingState.root.visibility = View.GONE
-        binding.noConnectionState.root.visibility = View.GONE
         binding.swipeToRefresh.visibility = View.VISIBLE
     }
 
     private fun showEmptyState() {
-        binding.swipeToRefresh.visibility = View.GONE
-        binding.errorState.root.visibility = View.GONE
-        binding.loadingState.root.visibility = View.GONE
-        binding.noConnectionState.root.visibility = View.GONE
         binding.emptyState.root.visibility = View.VISIBLE
     }
 
     private fun showErrorState() {
-        binding.swipeToRefresh.visibility = View.GONE
-        binding.emptyState.root.visibility = View.GONE
-        binding.noConnectionState.root.visibility = View.GONE
-        binding.loadingState.root.visibility = View.GONE
         binding.errorState.root.visibility = View.VISIBLE
         binding.errorState.tryAgain.setOnClickListener {
             viewModel.loadCharacters()
@@ -74,22 +63,22 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
     }
 
     private fun showLoadingState() {
-        binding.swipeToRefresh.visibility = View.GONE
-        binding.emptyState.root.visibility = View.GONE
-        binding.errorState.root.visibility = View.GONE
-        binding.noConnectionState.root.visibility = View.GONE
         binding.loadingState.root.visibility = View.VISIBLE
     }
 
     private fun showNoConnectionState() {
-        binding.swipeToRefresh.visibility = View.GONE
-        binding.emptyState.root.visibility = View.GONE
-        binding.errorState.root.visibility = View.GONE
-        binding.loadingState.root.visibility = View.GONE
         binding.noConnectionState.root.visibility = View.VISIBLE
         binding.noConnectionState.tryAgain.setOnClickListener {
             viewModel.loadCharacters()
         }
+    }
+
+    private fun hideAll() {
+        binding.swipeToRefresh.visibility = View.GONE
+        binding.emptyState.root.visibility = View.GONE
+        binding.errorState.root.visibility = View.GONE
+        binding.noConnectionState.root.visibility = View.GONE
+        binding.loadingState.root.visibility = View.GONE
     }
 
     override fun saveFavorite(character: CharacterModel) {
