@@ -10,9 +10,10 @@ import dagger.android.AndroidInjectionModule
     modules = [
         ApplicationModule::class,
         AndroidInjectionModule::class,
-        RepositoryModule::class,
-        NetworkModule::class,
         DomainModule::class,
+        RepositoryModule::class,
+        DatabaseModule::class,
+        NetworkModule::class,
     ]
 )
 interface ApplicationComponent {
