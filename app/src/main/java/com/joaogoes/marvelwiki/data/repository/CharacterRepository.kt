@@ -26,7 +26,7 @@ class CharacterRepositoryImpl @Inject constructor(
     // TODO: Compare with favorites
     // TODO: Handle error
     override suspend fun getCharacters(): Result<List<CharacterModel>, ServiceError> =
-        remoteDataSource.getCharacters()
+        remoteDataSource.getCharacters().mapSuccess { it.toCharacterModelList() }
 
     override suspend fun saveFavorite(character: CharacterModel): Result<Unit, DatabaseError> {
         if (character.id == null || character.name == null)
@@ -56,6 +56,7 @@ class CharacterRepositoryImpl @Inject constructor(
 
 sealed class ServiceError {
     object NetworkError : ServiceError()
+    object NoConnectionError: ServiceError()
     object UnknownError : ServiceError()
 }
 

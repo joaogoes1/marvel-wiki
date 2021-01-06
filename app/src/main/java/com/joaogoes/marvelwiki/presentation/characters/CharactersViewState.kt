@@ -7,5 +7,5 @@ class CharactersViewState {
     val characters: MutableLiveData<List<CharacterModel>> = MutableLiveData(emptyList())
     val state: MutableLiveData<State> = MutableLiveData(State.LOADING)
 
-    enum class State { LOADING, ERROR, SUCCESS, EMPTY_STATE }
+    enum class State { LOADING, ERROR, SUCCESS, EMPTY_STATE, NO_CONNECTION }
 }
