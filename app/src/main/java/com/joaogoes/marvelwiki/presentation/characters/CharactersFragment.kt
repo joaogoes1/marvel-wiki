@@ -18,17 +18,60 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.charactersList.adapter = adapter
+        setupSwipeToRefresh()
+        observeViewState()
+        viewModel.loadCharacters()
+    }
+
+    private fun setupSwipeToRefresh() {
         binding.swipeToRefresh.setOnRefreshListener {
             binding.swipeToRefresh.isRefreshing = true
             viewModel.loadCharacters()
         }
+    }
+    private fun observeViewState() {
         viewModel.viewState.characters.observe(viewLifecycleOwner, {
             adapter.submitList(it)
         })
-        viewModel.viewState.state.observe(viewLifecycleOwner, {
+        viewModel.viewState.state.observe(viewLifecycleOwner, { state ->
             binding.swipeToRefresh.isRefreshing = false
-            // TODO: handle state
+            when (state) {
+                CharactersViewState.State.EMPTY_STATE -> showEmptyState()
+                CharactersViewState.State.SUCCESS -> showSuccessState()
+                CharactersViewState.State.ERROR -> showErrorState()
+                CharactersViewState.State.LOADING -> showLoadingState()
+            }
         })
-        viewModel.loadCharacters()
+    }
+
+    private fun showSuccessState() {
+        binding.swipeToRefresh.visibility = View.VISIBLE
+        binding.emptyState.root.visibility = View.GONE
+        binding.errorState.root.visibility = View.GONE
+        binding.loadingState.root.visibility = View.GONE
+    }
+
+    private fun showEmptyState() {
+        binding.swipeToRefresh.visibility = View.GONE
+        binding.emptyState.root.visibility = View.VISIBLE
+        binding.errorState.root.visibility = View.GONE
+        binding.loadingState.root.visibility = View.GONE
+    }
+
+    private fun showErrorState() {
+        binding.swipeToRefresh.visibility = View.GONE
+        binding.emptyState.root.visibility = View.GONE
+        binding.errorState.root.visibility = View.VISIBLE
+        binding.loadingState.root.visibility = View.GONE
+        binding.errorState.tryAgain.setOnClickListener {
+            viewModel.loadCharacters()
+        }
+    }
+
+    private fun showLoadingState() {
+        binding.swipeToRefresh.visibility = View.GONE
+        binding.emptyState.root.visibility = View.GONE
+        binding.errorState.root.visibility = View.GONE
+        binding.loadingState.root.visibility = View.VISIBLE
     }
 }

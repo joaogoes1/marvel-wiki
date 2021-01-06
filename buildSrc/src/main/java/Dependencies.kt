@@ -7,7 +7,7 @@ object App {
     const val versionCode = 1
     const val versionCodeName = "1.0.0"
     const val applicationId = "com.joaogoes.marvelwiki"
-    const val gradleBuildTools = "com.android.tools.build:gradle:4.1.1"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     const val safeArgsGradlePlugin =
         "androidx.navigation:navigation-safe-args-gradle-plugin:${Jetpack.Navigation.Version.navigation}"
@@ -40,6 +40,15 @@ object Dagger {
     const val androidSupport = "$dagger:dagger-android-support:${Version.dagger}"
     const val androidProcessor = "$dagger:dagger-android-processor:${Version.dagger}"
     const val compiler = "$dagger:dagger-compiler:${Version.dagger}"
+}
+
+object Glide {
+    object Version {
+        const val glide = "4.11.0"
+    }
+    private const val base = "com.github.bumptech.glide"
+    const val core = "$base:glide:${Version.glide}"
+    const val compiler = "$base:compiler:${Version.glide}"
 }
 
 object Jetpack {
@@ -108,6 +117,13 @@ object Test {
 
     object OkHttpTest {
         const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${OkHttp.Version.okhttp}"
+    }
+
+    object Mockk {
+        object Version {
+            const val mockk = "1.10.4"
+        }
+        const val mockk = "io.mockk:mockk:${Version.mockk}"
     }
 
     object NavigationComponent {
