@@ -104,6 +104,15 @@ object Retrofit {
     const val moshiConverter = "$base:converter-moshi:${Version.retrofit}"
 }
 
+object Room {
+    object Version {
+        const val room = "2.2.5"
+    }
+    const val runtime = "androidx.room:room-runtime:${Version.room}"
+    const val compiler = "androidx.room:room-compiler:${Version.room}"
+    const val ktx = "androidx.room:room-ktx:${Version.room}"
+}
+
 object ViewBinding {
     object Version {
         const val viewBinding = "1.4.0"
@@ -114,6 +123,21 @@ object ViewBinding {
 }
 
 object Test {
+    object AndroidX {
+        object Version {
+            const val coreTesting = "2.1.0"
+        }
+        const val coreTesting = "androidx.arch.core:core-testing:${Version.coreTesting}"
+    }
+
+    object Espresso {
+        object Version {
+            const val core = "3.3.0"
+        }
+
+        const val core = "androidx.test.espresso:espresso-core:${Version.core}"
+    }
+
     object JUnit {
         object Version {
             const val jUnit = "4.13.1"
@@ -122,6 +146,13 @@ object Test {
 
         const val jUnit = "junit:junit:${Version.jUnit}"
         const val testExt = "androidx.test.ext:junit:${Version.testExt}"
+    }
+
+    object Kotlin {
+        object Version {
+            const val coroutines = "1.4.2"
+        }
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutines}"
     }
 
     object OkHttpTest {
@@ -141,11 +172,7 @@ object Test {
             "androidx.navigation:navigation-testing:${Jetpack.Navigation.Version.navigation}"
     }
 
-    object Espresso {
-        object Version {
-            const val core = "3.3.0"
-        }
-
-        const val core = "androidx.test.espresso:espresso-core:${Version.core}"
+    object Room {
+        const val room = "androidx.room:room-testing:2.2.5"
     }
 }

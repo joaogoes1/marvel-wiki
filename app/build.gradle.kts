@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 val publicKey: String = gradleLocalProperties(rootDir).getProperty("PUBLIC_KEY")
 val privateKey: String = gradleLocalProperties(rootDir).getProperty("PRIVATE_KEY")
 
@@ -72,17 +73,22 @@ dependencies {
     implementation(Moshi.codegen)
     implementation(Retrofit.retrofit)
     implementation(Retrofit.moshiConverter)
+    implementation(Room.runtime)
+    implementation(Room.ktx)
     implementation(ViewBinding.noReflection)
 
     kapt(Dagger.androidProcessor)
     kapt(Dagger.compiler)
     kapt(Glide.compiler)
+    kapt(Room.compiler)
 
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
+    testImplementation(Test.AndroidX.coreTesting)
+    testImplementation(Test.JUnit.jUnit)
+    testImplementation(Test.Kotlin.coroutines)
     testImplementation(Test.Mockk.mockk)
     testImplementation(Test.OkHttpTest.mockWebServer)
-    testImplementation(Test.JUnit.jUnit)
-    androidTestImplementation(Test.JUnit.testExt)
+    testImplementation(Test.Room.room)
+
     androidTestImplementation(Test.Espresso.core)
+    androidTestImplementation(Test.JUnit.testExt)
 }
