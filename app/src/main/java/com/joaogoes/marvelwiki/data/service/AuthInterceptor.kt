@@ -1,8 +1,7 @@
-package com.joaogoes.marvelwiki.data.api
+package com.joaogoes.marvelwiki.data.service
 
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
 
 private const val TIMESTAMP_KEY = "ts"
 private const val HASH_KEY = "hash"

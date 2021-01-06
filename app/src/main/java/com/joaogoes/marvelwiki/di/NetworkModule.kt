@@ -3,16 +3,12 @@ package com.joaogoes.marvelwiki.di
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import com.joaogoes.marvelwiki.data.api.CharacterApi
-import com.joaogoes.marvelwiki.data.api.MarvelService
+import com.joaogoes.marvelwiki.data.service.CharacterApi
+import com.joaogoes.marvelwiki.data.service.MarvelService
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import javax.inject.Singleton
 
 @Module
 class NetworkModule {

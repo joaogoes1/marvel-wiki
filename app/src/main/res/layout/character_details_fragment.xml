@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="name"
+            type="String" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="description"
+            type="String" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/character_details_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/character_details_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:imageUrl="@{imageUrl}"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_marvel_logo" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/character_details_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{description}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/character_details_image"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam interdum, tortor vestibulum venenatis porttitor, velit est eleifend nibh, eu consequat eros eros ac erat. Mauris ligula est, elementum quis orci nec, vestibulum efficitur ex. Pellentesque lacinia, neque quis maximus dignissim, velit metus mattis tortor, quis blandit eros eros sit amet." />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/comics_list_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comics_list_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/character_details_description" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comics_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comics_list_title"
+                tools:listitem="@layout/characters_card" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/series_list_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/series_list_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comics_list" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/series_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/series_list_title"
+                tools:listitem="@layout/characters_card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/error_state"
+            layout="@layout/error_state"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/loading_state"
+            layout="@layout/loading_state"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/no_connection_state"
+            layout="@layout/no_connection_state"
+            android:visibility="gone" />
+    </FrameLayout>
+</layout>

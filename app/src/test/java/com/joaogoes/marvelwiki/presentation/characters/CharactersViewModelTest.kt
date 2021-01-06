@@ -33,7 +33,7 @@ class CharactersViewModelTest {
     private val viewModel = CharactersViewModel(
         getCharactersUseCase,
         saveFavorite,
-        removeSavedFavoriteUseCase
+        removeSavedFavoriteUseCase,
     )
 
     @Test

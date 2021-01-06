@@ -9,6 +9,11 @@ interface DomainModule {
 
     @Binds
     fun bindGetCharacterUseCase(
+        getCharacterUseCase: GetCharacterUseCaseImpl
+    ): GetCharacterUseCase
+
+    @Binds
+    fun bindGetCharactersUseCase(
         getCharactersUseCase: GetCharactersUseCaseImpl
     ): GetCharactersUseCase
 

@@ -1,4 +1,4 @@
-package com.joaogoes.marvelwiki.data.api
+package com.joaogoes.marvelwiki.data.service
 
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
