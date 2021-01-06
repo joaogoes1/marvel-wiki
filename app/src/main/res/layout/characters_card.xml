@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            card_view:cardCornerRadius="8dp">
+            card_view:cardCornerRadius="12dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -34,18 +34,20 @@
                     android:id="@+id/character_image"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:src="@{uiModel.imageUrl}"
+                    android:src="@mipmap/ic_launcher"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@mipmap/ic_launcher" />
+                <!-- android:src="@{uiModel.imageUrl}" -->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/character_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="8dp"
+                    android:textColor="@color/black"
                     android:ellipsize="end"
                     android:lines="1"
                     android:text="@{uiModel.name}"

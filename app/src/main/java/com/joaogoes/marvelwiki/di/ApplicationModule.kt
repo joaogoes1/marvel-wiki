@@ -1,6 +1,7 @@
 package com.joaogoes.marvelwiki.di
 
 import com.joaogoes.marvelwiki.presentation.MainActivity
+import com.joaogoes.marvelwiki.presentation.characters.CharactersFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -8,4 +9,7 @@ import dagger.android.ContributesAndroidInjector
 interface ApplicationModule {
     @ContributesAndroidInjector
     fun provideActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    fun provideCharactersFragment(): CharactersFragment
 }

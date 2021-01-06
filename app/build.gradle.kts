@@ -1,3 +1,7 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+val publicKey: String = gradleLocalProperties(rootDir).getProperty("PUBLIC_KEY")
+val privateKey: String = gradleLocalProperties(rootDir).getProperty("PRIVATE_KEY")
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -26,6 +30,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "PUBLIC_KEY", publicKey)
+            buildConfigField("String", "PRIVATE_KEY", privateKey)
+        }
+        getByName("debug") {
+            buildConfigField("String", "PUBLIC_KEY", publicKey)
+            buildConfigField("String", "PRIVATE_KEY", privateKey)
         }
     }
     compileOptions {
@@ -35,11 +45,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    android {
-        buildFeatures {
-            dataBinding = true
-            viewBinding = true
-        }
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+    packagingOptions {
+        pickFirst("META-INF/*")
     }
 }
 
@@ -49,6 +60,9 @@ dependencies {
     implementation(AndroidX.appCompat)
     implementation(AndroidX.cardView)
     implementation(AndroidX.constraintLayout)
+    implementation(AndroidX.fragment)
+    implementation(OkHttp.core)
+    implementation(OkHttp.loggingInterceptor)
     implementation(Dagger.android)
     implementation(Dagger.androidSupport)
     implementation(Jetpack.Navigation.featureModule)
@@ -62,6 +76,7 @@ dependencies {
     kapt(Dagger.androidProcessor)
     kapt(Dagger.compiler)
 
+    testImplementation(Test.OkHttpTest.mockWebServer)
     testImplementation(Test.JUnit.jUnit)
     androidTestImplementation(Test.JUnit.testExt)
     androidTestImplementation(Test.Espresso.core)
