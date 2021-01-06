@@ -14,7 +14,7 @@ abstract class MarvelDatabase : RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao
 
     companion object {
-        fun buildDatabase(context: Context) =
+        fun buildDatabase(context: Context): MarvelDatabase =
             Room.databaseBuilder(
                 context.applicationContext,
                 MarvelDatabase::class.java,

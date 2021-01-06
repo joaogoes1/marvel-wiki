@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.joaogoes.marvelwiki.data.model.CharacterModel
 import com.joaogoes.marvelwiki.databinding.CharactersCardBinding
 
 // TODO: Use Glide to render image
 class CharactersAdapter :
-    ListAdapter<CharactersItemUiModel, CharactersAdapter.CharacterViewHolder>(CharactersDiffUtil) {
+    ListAdapter<CharacterModel, CharactersAdapter.CharacterViewHolder>(CharactersDiffUtil) {
 
     class CharacterViewHolder(val binding: CharactersCardBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -22,19 +23,20 @@ class CharactersAdapter :
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val item = currentList[position]
         holder.binding.apply {
-            uiModel = item
+            name = item.name
+            imageUrl = item.imageUrl
         }
     }
 
-    object CharactersDiffUtil : DiffUtil.ItemCallback<CharactersItemUiModel>() {
+    object CharactersDiffUtil : DiffUtil.ItemCallback<CharacterModel>() {
         override fun areItemsTheSame(
-            oldItem: CharactersItemUiModel,
-            newItem: CharactersItemUiModel
-        ): Boolean = oldItem == newItem
+            oldItem: CharacterModel,
+            newItem: CharacterModel
+        ): Boolean = oldItem.id == newItem.id
 
         override fun areContentsTheSame(
-            oldItem: CharactersItemUiModel,
-            newItem: CharactersItemUiModel
+            oldItem: CharacterModel,
+            newItem: CharacterModel
         ): Boolean = oldItem == newItem
 
     }

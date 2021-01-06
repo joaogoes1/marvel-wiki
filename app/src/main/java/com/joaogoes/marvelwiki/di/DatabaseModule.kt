@@ -7,9 +7,9 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-interface DatabaseModule {
+class DatabaseModule {
 
     @Provides
     @Singleton
-    fun database(context: Context): MarvelDatabase = MarvelDatabase.buildDatabase(context)
+    fun providesDatabase(context: Context): MarvelDatabase = MarvelDatabase.buildDatabase(context)
 }
