@@ -46,6 +46,7 @@ object Glide {
     object Version {
         const val glide = "4.11.0"
     }
+
     private const val base = "com.github.bumptech.glide"
     const val core = "$base:glide:${Version.glide}"
     const val compiler = "$base:compiler:${Version.glide}"
@@ -66,6 +67,13 @@ object Jetpack {
 
 object Kotlin {
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${App.kotlinVersion}"
+
+    object Coroutines {
+        object Version {
+            const val android = "1.3.9"
+        }
+        const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.android}"
+    }
 }
 
 object Moshi {
@@ -80,6 +88,7 @@ object OkHttp {
     object Version {
         const val okhttp = "4.9.0"
     }
+
     private const val base = "com.squareup.okhttp3"
     const val core = "$base:okhttp:${Version.okhttp}"
     const val loggingInterceptor = "$base:logging-interceptor:4.9.0"
@@ -123,6 +132,7 @@ object Test {
         object Version {
             const val mockk = "1.10.4"
         }
+
         const val mockk = "io.mockk:mockk:${Version.mockk}"
     }
 

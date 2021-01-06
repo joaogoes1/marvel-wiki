@@ -55,6 +55,7 @@ android {
 }
 dependencies {
     implementation(Kotlin.kotlinStdLib)
+    implementation(Kotlin.Coroutines.android)
     implementation(AndroidX.core)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.cardView)
@@ -77,6 +78,8 @@ dependencies {
     kapt(Dagger.compiler)
     kapt(Glide.compiler)
 
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
     testImplementation(Test.Mockk.mockk)
     testImplementation(Test.OkHttpTest.mockWebServer)
     testImplementation(Test.JUnit.jUnit)
