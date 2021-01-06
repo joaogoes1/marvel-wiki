@@ -6,7 +6,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-interface ApplicationModule {
+interface PresentationModule {
+
     @ContributesAndroidInjector
     fun provideActivity(): MainActivity
 

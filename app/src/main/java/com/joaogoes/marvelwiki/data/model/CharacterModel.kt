@@ -11,6 +11,7 @@ data class CharacterModel(
     val stories: List<StoryModel>,
     val events: List<EventModel>,
     val seriesList: List<SeriesModel>,
+    val isFavorite: Boolean = false
 )
 data class CharacterUrl(
     val type: String?,

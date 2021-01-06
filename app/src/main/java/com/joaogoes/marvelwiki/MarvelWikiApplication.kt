@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.joaogoes.marvelwiki.data.database.MarvelDatabase
 import com.joaogoes.marvelwiki.di.DaggerApplicationComponent
+import com.joaogoes.marvelwiki.di.DatabaseModule
 import com.joaogoes.marvelwiki.di.Injectable
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
