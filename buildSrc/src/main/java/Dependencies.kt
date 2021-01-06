@@ -19,6 +19,7 @@ object AndroidX {
         const val appCompat = "1.2.0"
         const val constraintLayout = "2.0.4"
         const val cardView = "1.0.0"
+        const val fragment = "1.2.5"
     }
 
     const val core = "androidx.core:core-ktx:${Version.core}"
@@ -26,6 +27,7 @@ object AndroidX {
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
     const val cardView = "androidx.cardview:cardview:${Version.cardView}"
+    const val fragment = "androidx.fragment:fragment:${Version.fragment}"
 }
 
 object Dagger {
@@ -59,10 +61,19 @@ object Kotlin {
 
 object Moshi {
     object Version {
-        const val codegen = "1.11.0"
+        const val codegen = "1.9.3"
     }
 
     const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:${Version.codegen}"
+}
+
+object OkHttp {
+    object Version {
+        const val okhttp = "4.9.0"
+    }
+    private const val base = "com.squareup.okhttp3"
+    const val core = "$base:okhttp:${Version.okhttp}"
+    const val loggingInterceptor = "$base:logging-interceptor:4.9.0"
 }
 
 object Retrofit {
@@ -93,6 +104,10 @@ object Test {
 
         const val jUnit = "junit:junit:${Version.jUnit}"
         const val testExt = "androidx.test.ext:junit:${Version.testExt}"
+    }
+
+    object OkHttpTest {
+        const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${OkHttp.Version.okhttp}"
     }
 
     object NavigationComponent {
