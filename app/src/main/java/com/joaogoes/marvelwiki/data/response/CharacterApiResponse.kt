@@ -1,10 +1,9 @@
-package com.joaogoes.marvelwiki.data.model
+package com.joaogoes.marvelwiki.data.response
 
 import com.squareup.moshi.JsonClass
-import java.util.*
 
 @JsonClass(generateAdapter = true)
-data class CharacterResponse(
+data class CharacterApiResponse(
     val code: Int?,
     val status: String?,
     val copyright: String?,
@@ -20,16 +19,16 @@ data class CharacterDataContainer(
     val limit: Int?,
     val total: Int?,
     val count: Int?,
-    val results: List<Character>?
+    val results: List<CharacterResponse>?
 )
 
 @JsonClass(generateAdapter = true)
-data class Character(
+data class CharacterResponse(
     val id: Int?,
     val name: String?,
     val description: String?,
     val resourceURI: String?,
-    val urls: List<URL>,
+    val urls: List<URL>?,
     val thumbnail: Image?,
     val comics: ComicList,
     val stories: StoryList?,
@@ -80,6 +79,14 @@ data class StorySummary(
 
 @JsonClass(generateAdapter = true)
 data class EventList(
+    val available: Int?,
+    val returned: Int?,
+    val collectionURI: String?,
+    val items: List<EventSummary>?,
+)
+
+@JsonClass(generateAdapter = true)
+data class EventSummary(
     val resourceURI: String?,
     val name: String?,
 )

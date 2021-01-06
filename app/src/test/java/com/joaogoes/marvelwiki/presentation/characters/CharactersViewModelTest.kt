@@ -4,7 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.joaogoes.marvelwiki.data.Result
-import com.joaogoes.marvelwiki.data.model.CharacterResponse
+import com.joaogoes.marvelwiki.data.model.CharacterModel
+import com.joaogoes.marvelwiki.data.response.CharacterApiResponse
 import com.joaogoes.marvelwiki.data.repository.ServiceError
 import com.joaogoes.marvelwiki.domain.GetCharactersUseCase
 import io.mockk.coEvery
@@ -48,7 +49,7 @@ class CharactersViewModelTest {
     }
 
     private fun prepareScenario(
-        result: Result<CharacterResponse, ServiceError>
+        result: Result<List<CharacterModel>, ServiceError>
     ) {
         coEvery { getCharactersUseCase.invoke() } returns result
     }
