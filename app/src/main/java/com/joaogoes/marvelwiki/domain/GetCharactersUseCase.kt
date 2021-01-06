@@ -11,7 +11,7 @@ interface GetCharactersUseCase {
     suspend operator fun invoke(): Result<List<CharacterModel>, ServiceError>
 }
 
-class GetCharacters @Inject constructor(
+class GetCharactersUseCaseImpl @Inject constructor(
     private val repository: CharacterRepository
 ): GetCharactersUseCase {
     override suspend fun invoke(): Result<List<CharacterModel>, ServiceError> =

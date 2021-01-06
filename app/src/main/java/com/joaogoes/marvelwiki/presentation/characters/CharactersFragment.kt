@@ -5,16 +5,17 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.joaogoes.marvelwiki.R
+import com.joaogoes.marvelwiki.data.model.CharacterModel
 import com.joaogoes.marvelwiki.databinding.CharactersFragmentBinding
 import com.joaogoes.marvelwiki.di.Injectable
 import javax.inject.Inject
 
-class CharactersFragment : Fragment(R.layout.characters_fragment), Injectable {
+class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFragmentListener, Injectable {
 
     @Inject
     lateinit var viewModel: CharactersViewModel
     private val binding: CharactersFragmentBinding by viewBinding(CharactersFragmentBinding::bind)
-    private val adapter = CharactersAdapter()
+    private val adapter = CharactersAdapter(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.charactersList.adapter = adapter
@@ -73,5 +74,13 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), Injectable {
         binding.emptyState.root.visibility = View.GONE
         binding.errorState.root.visibility = View.GONE
         binding.loadingState.root.visibility = View.VISIBLE
+    }
+
+    override fun saveFavorite(character: CharacterModel) {
+        viewModel.favoriteCharacter(character)
+    }
+
+    override fun openCharacter(characterId: Int) {
+        TODO("Not yet implemented")
     }
 }

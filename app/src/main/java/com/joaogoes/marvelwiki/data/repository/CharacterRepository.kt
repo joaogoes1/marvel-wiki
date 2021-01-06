@@ -2,6 +2,10 @@ package com.joaogoes.marvelwiki.data.repository
 
 import com.joaogoes.marvelwiki.data.Result
 import com.joaogoes.marvelwiki.data.api.CharacterApi
+import com.joaogoes.marvelwiki.data.database.entity.CharacterEntity
+import com.joaogoes.marvelwiki.data.datasource.DatabaseError
+import com.joaogoes.marvelwiki.data.datasource.LocalDataSource
+import com.joaogoes.marvelwiki.data.datasource.RemoteDataSource
 import com.joaogoes.marvelwiki.data.model.*
 import com.joaogoes.marvelwiki.data.response.*
 import kotlinx.coroutines.Dispatchers
@@ -10,16 +14,44 @@ import javax.inject.Inject
 
 interface CharacterRepository {
     suspend fun getCharacters(): Result<List<CharacterModel>, ServiceError>
+    suspend fun saveFavorite(character: CharacterModel): Result<Unit, DatabaseError>
+    suspend fun removeSavedFavorite(character: CharacterModel): Result<Unit, DatabaseError>
 }
 
 class CharacterRepositoryImpl @Inject constructor(
-    private val characterApi: CharacterApi
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
 ) : CharacterRepository {
+
+    // TODO: Compare with favorites
+    // TODO: Handle error
     override suspend fun getCharacters(): Result<List<CharacterModel>, ServiceError> =
-        withContext(Dispatchers.IO) {
-            val result = characterApi.getCharactersAsync()
-            Result.Success(result.toCharacterModelList())
-        }
+        remoteDataSource.getCharacters()
+
+    override suspend fun saveFavorite(character: CharacterModel): Result<Unit, DatabaseError> {
+        if (character.id == null || character.name == null)
+            return Result.Error(DatabaseError.InvalidCharacter)
+
+        val entity = CharacterEntity(
+            id = character.id,
+            name = character.name,
+            imageUrl = character.imageUrl
+        )
+        return localDataSource.saveFavorite(entity)
+    }
+
+    override suspend fun removeSavedFavorite(character: CharacterModel): Result<Unit, DatabaseError> {
+        if (character.id == null || character.name == null)
+            return Result.Error(DatabaseError.InvalidCharacter)
+
+        val entity = CharacterEntity(
+            id = character.id,
+            name = character.name,
+            imageUrl = character.imageUrl
+        )
+        return localDataSource.saveFavorite(entity)
+    }
+
 }
 
 sealed class ServiceError {

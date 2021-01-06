@@ -1,7 +1,6 @@
 package com.joaogoes.marvelwiki.di
 
-import com.joaogoes.marvelwiki.domain.GetCharacters
-import com.joaogoes.marvelwiki.domain.GetCharactersUseCase
+import com.joaogoes.marvelwiki.domain.*
 import dagger.Binds
 import dagger.Module
 
@@ -10,6 +9,16 @@ interface DomainModule {
 
     @Binds
     fun bindGetCharacterUseCase(
-        getCharactersUseCase: GetCharacters
+        getCharactersUseCase: GetCharactersUseCaseImpl
     ): GetCharactersUseCase
+
+    @Binds
+    fun bindSaveFavoriteUseCase(
+        saveFavoriteUseCase: SaveFavoriteUseCaseImpl
+    ): SaveFavoriteUseCase
+
+    @Binds
+    fun bindRemoveSavedFavoriteUseCase(
+        removeSavedFavoriteUseCase: RemoveSavedFavoriteUseCaseImpl
+    ): RemoveSavedFavoriteUseCase
 }
