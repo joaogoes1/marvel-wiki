@@ -18,6 +18,11 @@ interface DomainModule {
     ): GetCharactersUseCase
 
     @Binds
+    fun bindGetFavoritesUseCase(
+        getFavoritesUseCase: GetFavoritesUseCaseImpl
+    ): GetFavoritesUseCase
+
+    @Binds
     fun bindSaveFavoriteUseCase(
         saveFavoriteUseCase: SaveFavoriteUseCaseImpl
     ): SaveFavoriteUseCase
@@ -26,4 +31,9 @@ interface DomainModule {
     fun bindRemoveSavedFavoriteUseCase(
         removeSavedFavoriteUseCase: RemoveSavedFavoriteUseCaseImpl
     ): RemoveSavedFavoriteUseCase
+
+    @Binds
+    fun bindRemoveFavoriteUseCase(
+        removeFavoriteUseCase: RemoveFavoriteUseCaseImpl
+    ): RemoveFavoriteUseCase
 }

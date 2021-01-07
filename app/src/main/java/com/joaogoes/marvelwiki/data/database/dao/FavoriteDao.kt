@@ -1,17 +1,17 @@
 package com.joaogoes.marvelwiki.data.database.dao
 
 import androidx.room.*
-import com.joaogoes.marvelwiki.data.database.entity.CharacterEntity
+import com.joaogoes.marvelwiki.data.database.entity.FavoriteEntity
 
 @Dao
 interface FavoriteDao {
 
-    @Query("SELECT * FROM character")
-    fun getAllFavorites(): List<CharacterEntity>
+    @Query("SELECT * FROM character ORDER BY name ASC")
+    fun getAllFavorites(): List<FavoriteEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFavorite(favorite: CharacterEntity): Long
+    fun insertFavorite(favorite: FavoriteEntity): Long
 
     @Delete
-    fun deleteFavorite(favorite: CharacterEntity): Int
+    fun deleteFavorite(favorite: FavoriteEntity): Int
 }
