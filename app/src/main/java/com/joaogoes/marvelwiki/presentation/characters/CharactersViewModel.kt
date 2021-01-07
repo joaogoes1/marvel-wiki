@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor(
     private val getCharacters: GetCharactersUseCase,
     private val saveFavorite: SaveFavoriteUseCase,
-    private val removeSavedFavoriteUseCase: RemoveSavedFavoriteUseCase,
+    private val removeSavedFavorite: RemoveSavedFavoriteUseCase,
 ) : ViewModel() {
     val viewState: CharactersViewState = CharactersViewState()
 
@@ -42,7 +42,7 @@ class CharactersViewModel @Inject constructor(
 
     fun favoriteCharacter(character: CharacterModel) = viewModelScope.launch {
         if (character.isFavorite) {
-            removeSavedFavoriteUseCase(character).onSuccess {
+            removeSavedFavorite(character).onSuccess {
                 handleFavoriteCharacterSuccess(character)
             }
         } else {

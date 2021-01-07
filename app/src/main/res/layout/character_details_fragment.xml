@@ -27,6 +27,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/character_details_fragment_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/characters_fragment_menu"
+                app:title="@{name}"
+                app:titleTextColor="@color/red_500" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/character_details_top_card"
                 android:layout_width="match_parent"
@@ -35,7 +44,7 @@
                 app:cardCornerRadius="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/character_details_fragment_toolbar">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
