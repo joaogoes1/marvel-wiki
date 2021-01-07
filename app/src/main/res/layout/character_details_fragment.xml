@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/characters_fragment_menu"
+                app:menu="@menu/character_details_fragment_menu"
                 app:title="@{name}"
                 app:titleTextColor="@color/red_500" />
 
@@ -126,17 +126,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
-            android:id="@+id/error_state"
+            android:id="@+id/characters_fragment_error_state"
             layout="@layout/error_state"
             android:visibility="gone" />
 
         <include
-            android:id="@+id/loading_state"
+            android:id="@+id/characters_fragment_loading_state"
             layout="@layout/loading_state"
             android:visibility="gone" />
 
         <include
-            android:id="@+id/no_connection_state"
+            android:id="@+id/characters_fragment_no_connection_state"
             layout="@layout/no_connection_state"
             android:visibility="gone" />
     </FrameLayout>

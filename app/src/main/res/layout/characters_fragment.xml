@@ -3,53 +3,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/characters_fragment_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:menu="@menu/characters_fragment_menu"
-            app:title="@string/characters_fragment_title"
-            app:titleTextColor="@color/red_500"/>
+        android:layout_height="match_parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_to_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/characters_list"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="4dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                tools:listitem="@layout/vertical_grid_card_item" />
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/grid_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ic_grid"
+                    app:layout_constraintBottom_toBottomOf="@id/characters_fragment_display_mode_switch"
+                    app:layout_constraintEnd_toStartOf="@id/characters_fragment_display_mode_switch"
+                    app:layout_constraintTop_toTopOf="@id/characters_fragment_display_mode_switch" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/characters_fragment_display_mode_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:thumbTint="@color/red_500"
+                    app:trackTint="@color/red_700" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/list_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ic_view_list"
+                    app:layout_constraintBottom_toBottomOf="@id/characters_fragment_display_mode_switch"
+                    app:layout_constraintStart_toEndOf="@id/characters_fragment_display_mode_switch"
+                    app:layout_constraintTop_toTopOf="@id/characters_fragment_display_mode_switch" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/characters_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:padding="4dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/characters_fragment_display_mode_switch"
+                    app:spanCount="2"
+                    tools:listitem="@layout/vertical_grid_card_item" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <include
-            android:id="@+id/empty_state"
+            android:id="@+id/characters_fragment_empty_state"
             layout="@layout/empty_state"
             android:visibility="gone" />
 
         <include
-            android:id="@+id/error_state"
+            android:id="@+id/characters_fragment_error_state"
             layout="@layout/error_state"
             android:visibility="gone" />
 
         <include
-            android:id="@+id/loading_state"
+            android:id="@+id/characters_fragment_loading_state"
             layout="@layout/loading_state"
             android:visibility="gone" />
 
         <include
-            android:id="@+id/no_connection_state"
+            android:id="@+id/characters_fragment_no_connection_state"
             layout="@layout/no_connection_state"
             android:visibility="gone" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </FrameLayout>
 </layout>
