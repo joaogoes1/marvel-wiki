@@ -27,11 +27,29 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setupMenu()
         setupRecyclerViews()
         setupTryAgainButton()
         observeState()
         observeCharacter()
         viewModel.loadCharacter(args.characterId)
+    }
+
+    private fun setupMenu() {
+        binding.characterDetailsFragmentToolbar.inflateMenu(R.menu.character_details_fragment_menu)
+        binding.characterDetailsFragmentToolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.favorite_item -> {
+                    viewModel.removeFavoriteCharacter()
+                    true
+                }
+                R.id.remove_favorite_item -> {
+                    viewModel.favoriteCharacter()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     @SuppressLint("WrongConstant")
@@ -79,6 +97,7 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
             updateDescription(character?.description)
             updateComicList(character?.comics)
             updateSeriesList(character?.seriesList)
+            updateMenu(character?.isFavorite ?: false)
         })
     }
 
@@ -99,5 +118,19 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
         binding.seriesList.visibility = if (series.isNullOrEmpty()) View.GONE else View.VISIBLE
         binding.seriesListTitle.visibility = if (series.isNullOrEmpty()) View.GONE else View.VISIBLE
         seriesAdapter.submitList(series)
+    }
+
+    private fun updateMenu(isFavorite: Boolean) {
+        val favoriteItem = binding.characterDetailsFragmentToolbar.menu.findItem(R.id.favorite_item)
+        val removeFavoriteItem =
+            binding.characterDetailsFragmentToolbar.menu.findItem(R.id.remove_favorite_item)
+
+        if (isFavorite) {
+            favoriteItem.isVisible = true
+            removeFavoriteItem.isVisible = false
+        } else {
+            favoriteItem.isVisible = false
+            removeFavoriteItem.isVisible = true
+        }
     }
 }
