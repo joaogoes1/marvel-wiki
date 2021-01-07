@@ -73,13 +73,7 @@ class CharacterRepositoryImpl @Inject constructor(
     }
 
     override suspend fun removeSavedFavorite(favoriteModel: FavoriteModel): Result<Unit, DatabaseError> =
-        try {
-
         localDataSource.removeSavedFavorite(favoriteModel.toEntity())
-        }catch (e: Exception) {
-            Log.e("asdfghjkl", e.message ?: "sem mensageme")
-            Result.Error(DatabaseError.UnknownError)
-        }
 }
 
 sealed class ServiceError {
