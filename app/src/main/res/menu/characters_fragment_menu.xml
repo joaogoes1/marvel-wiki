@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/grid_mode"
+        android:checked="false"
+        android:contentDescription="@string/characters_fragment_menu_change_to_grid_title"
+        android:icon="@drawable/ic_grid"
+        android:title="@string/characters_fragment_menu_change_to_grid_title"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/list_mode"
+        android:checked="false"
+        android:contentDescription="@string/characters_fragment_menu_change_to_list_title"
+        android:icon="@drawable/ic_view_list"
+        android:title="@string/characters_fragment_menu_change_to_list_title"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+</menu>

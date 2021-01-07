@@ -1,6 +1,7 @@
 package com.joaogoes.marvelwiki.presentation.characters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,27 +9,71 @@ import androidx.recyclerview.widget.RecyclerView
 import com.joaogoes.marvelwiki.R
 import com.joaogoes.marvelwiki.data.model.CharacterModel
 import com.joaogoes.marvelwiki.databinding.VerticalGridCardItemBinding
+import com.joaogoes.marvelwiki.databinding.VerticalListCardItemBinding
 
 class CharactersAdapter(
     private val listener: CharactersFragmentListener
 ) : ListAdapter<CharacterModel, CharactersAdapter.CharacterViewHolder>(CharactersDiffUtil) {
+    var viewType: ViewType = ViewType.GRID
 
-    class CharacterViewHolder(val binding: VerticalGridCardItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    sealed class CharacterViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
+        class CharacterGridViewHolder(val binding: VerticalGridCardItemBinding) :
+            CharacterViewHolder(binding.root)
+
+        class CharacterListViewHolder(val binding: VerticalListCardItemBinding) :
+            CharacterViewHolder(binding.root)
+    }
+
+    enum class ViewType(val viewType: Int) { GRID(0), LIST(1) }
+
+    override fun getItemViewType(position: Int): Int {
+        return viewType.viewType
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CharacterViewHolder(VerticalGridCardItemBinding.inflate(layoutInflater, parent, false))
+
+        return if (viewType == ViewType.GRID.viewType)
+            CharacterViewHolder.CharacterGridViewHolder(
+                VerticalGridCardItemBinding.inflate(
+                    layoutInflater,
+                    parent,
+                    false
+                )
+            )
+        else
+            CharacterViewHolder.CharacterListViewHolder(
+                VerticalListCardItemBinding.inflate(
+                    layoutInflater,
+                    parent,
+                    false
+                )
+            )
+
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val item = currentList[position]
-        holder.binding.apply {
-            name = item.name
-            imageUrl = item.imageUrl
-            favoriteButton.setBackgroundResource(getFavoriteIcon(item.isFavorite))
-            favoriteButton.setOnClickListener { listener.saveFavorite(item) }
-            container.setOnClickListener { listener.openCharacter(item.id ?: -1) }
+        when (holder) {
+            is CharacterViewHolder.CharacterGridViewHolder -> {
+                holder.binding.apply {
+                    name = item.name
+                    imageUrl = item.imageUrl
+                    favoriteButton.setBackgroundResource(getFavoriteIcon(item.isFavorite))
+                    favoriteButton.setOnClickListener { listener.saveFavorite(item) }
+                    container.setOnClickListener { listener.openCharacter(item.id ?: -1) }
+                }
+            }
+            is CharacterViewHolder.CharacterListViewHolder -> {
+                holder.binding.apply {
+                    name = item.name
+                    imageUrl = item.imageUrl
+                    favoriteButton.setBackgroundResource(getFavoriteIcon(item.isFavorite))
+                    favoriteButton.setOnClickListener { listener.saveFavorite(item) }
+                    container.setOnClickListener { listener.openCharacter(item.id ?: -1) }
+                }
+            }
         }
     }
 
