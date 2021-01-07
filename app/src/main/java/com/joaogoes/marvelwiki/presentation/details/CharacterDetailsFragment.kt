@@ -27,6 +27,7 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
         setupTryAgainButton()
         observeState()
         observeCharacter()
+        viewModel.loadCharacter(args.characterId)
     }
 
     @SuppressLint("WrongConstant")
