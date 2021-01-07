@@ -1,7 +1,8 @@
 package com.joaogoes.marvelwiki.data.repository
 
+import android.util.Log
 import com.joaogoes.marvelwiki.data.Result
-import com.joaogoes.marvelwiki.data.database.entity.CharacterEntity
+import com.joaogoes.marvelwiki.data.database.entity.FavoriteEntity
 import com.joaogoes.marvelwiki.data.datasource.DatabaseError
 import com.joaogoes.marvelwiki.data.datasource.LocalDataSource
 import com.joaogoes.marvelwiki.data.datasource.RemoteDataSource
@@ -10,45 +11,20 @@ import com.joaogoes.marvelwiki.data.response.*
 import javax.inject.Inject
 
 interface CharacterRepository {
+    suspend fun getCharacter(characterId: Int): Result<CharacterModel, ServiceError>
     suspend fun getCharacters(): Result<List<CharacterModel>, ServiceError>
+    suspend fun getFavorites(): Result<List<FavoriteModel>, DatabaseError>
     suspend fun saveFavorite(character: CharacterModel): Result<Unit, DatabaseError>
     suspend fun removeSavedFavorite(character: CharacterModel): Result<Unit, DatabaseError>
-    suspend fun getCharacter(characterId: Int): Result<CharacterModel, ServiceError>
+    suspend fun removeSavedFavorite(favoriteModel: FavoriteModel): Result<Unit, DatabaseError>
 }
 
+// TODO: Create a DataError, or something like this, because the don't need to kwon if error is about database or service
+//  and sometimes the same function can catch error from both
 class CharacterRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
 ) : CharacterRepository {
-
-    // TODO: Compare with favorites
-    // TODO: Handle error
-    override suspend fun getCharacters(): Result<List<CharacterModel>, ServiceError> =
-        remoteDataSource.getCharacters().mapSuccess { it.toCharacterModelList() }
-
-    override suspend fun saveFavorite(character: CharacterModel): Result<Unit, DatabaseError> {
-        if (character.id == null || character.name == null)
-            return Result.Error(DatabaseError.InvalidCharacter)
-
-        val entity = CharacterEntity(
-            id = character.id,
-            name = character.name,
-            imageUrl = character.imageUrl
-        )
-        return localDataSource.saveFavorite(entity)
-    }
-
-    override suspend fun removeSavedFavorite(character: CharacterModel): Result<Unit, DatabaseError> {
-        if (character.id == null || character.name == null)
-            return Result.Error(DatabaseError.InvalidCharacter)
-
-        val entity = CharacterEntity(
-            id = character.id,
-            name = character.name,
-            imageUrl = character.imageUrl
-        )
-        return localDataSource.saveFavorite(entity)
-    }
 
     override suspend fun getCharacter(characterId: Int): Result<CharacterModel, ServiceError> =
         when (val result = remoteDataSource.getCharacter(characterId)) {
@@ -60,6 +36,49 @@ class CharacterRepositoryImpl @Inject constructor(
                     Result.Success(item.toModel())
             }
             is Result.Error -> result
+        }
+
+    // TODO: Compare with favorites
+    // TODO: Handle error
+    override suspend fun getCharacters(): Result<List<CharacterModel>, ServiceError> =
+        remoteDataSource.getCharacters().mapSuccess { it.toCharacterModelList() }
+
+    override suspend fun getFavorites(): Result<List<FavoriteModel>, DatabaseError> =
+        localDataSource.getFavorites().mapSuccess { list ->
+            list.map { it.toModel() }
+        }
+
+    override suspend fun saveFavorite(character: CharacterModel): Result<Unit, DatabaseError> {
+        if (character.id == null || character.name == null)
+            return Result.Error(DatabaseError.InvalidCharacter)
+
+        val entity = FavoriteEntity(
+            id = character.id,
+            name = character.name,
+            imageUrl = character.imageUrl
+        )
+        return localDataSource.saveFavorite(entity)
+    }
+
+    override suspend fun removeSavedFavorite(character: CharacterModel): Result<Unit, DatabaseError> {
+        if (character.id == null || character.name == null)
+            return Result.Error(DatabaseError.InvalidCharacter)
+
+        val entity = FavoriteEntity(
+            id = character.id,
+            name = character.name,
+            imageUrl = character.imageUrl
+        )
+        return localDataSource.saveFavorite(entity)
+    }
+
+    override suspend fun removeSavedFavorite(favoriteModel: FavoriteModel): Result<Unit, DatabaseError> =
+        try {
+
+        localDataSource.removeSavedFavorite(favoriteModel.toEntity())
+        }catch (e: Exception) {
+            Log.e("asdfghjkl", e.message ?: "sem mensageme")
+            Result.Error(DatabaseError.UnknownError)
         }
 }
 
@@ -100,3 +119,7 @@ fun StorySummary.toModel() = StoryModel(resourceURI, name, type)
 fun EventSummary.toModel() = EventModel(resourceURI, name)
 
 fun SeriesSummary.toModel() = SeriesModel(resourceURI, name)
+
+fun FavoriteEntity.toModel() = FavoriteModel(id, name, imageUrl)
+
+fun FavoriteModel.toEntity() = FavoriteEntity(id, name, imageUrl)

@@ -11,6 +11,7 @@ import com.joaogoes.marvelwiki.R
 import com.joaogoes.marvelwiki.data.model.CharacterModel
 import com.joaogoes.marvelwiki.databinding.CharactersFragmentBinding
 import com.joaogoes.marvelwiki.di.Injectable
+import com.joaogoes.marvelwiki.presentation.home.HomeFragmentDirections
 import com.joaogoes.marvelwiki.presentation.utils.showOnly
 import javax.inject.Inject
 
@@ -21,11 +22,6 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
     lateinit var viewModel: CharactersViewModel
     private val binding: CharactersFragmentBinding by viewBinding(CharactersFragmentBinding::bind)
     private val adapter = CharactersAdapter(this)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.charactersList.adapter = adapter
@@ -107,7 +103,7 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
 
     override fun openCharacter(characterId: Int) {
         findNavController().navigate(
-            CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailsFragment(
+            HomeFragmentDirections.actionHomeFragmentToCharacterDetailsFragment(
                 characterId
             )
         )
