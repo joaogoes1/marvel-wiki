@@ -18,6 +18,8 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
     @Inject
     lateinit var viewModel: CharacterDetailsViewModel
     private val args by navArgs<CharacterDetailsFragmentArgs>()
+    private val comicsAdapter = CharacterDetailsSectionAdapter(ComicsDiffUtil)
+    private val seriesAdapter = CharacterDetailsSectionAdapter(SeriesDiffUtil)
     private val binding: CharacterDetailsFragmentBinding by viewBinding(
         CharacterDetailsFragmentBinding::bind
     )
@@ -35,8 +37,15 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
         val context = requireContext()
         val orientation = LinearLayoutManager.HORIZONTAL
 
-        binding.comicsList.layoutManager = LinearLayoutManager(context, orientation, false)
-        binding.seriesList.layoutManager = LinearLayoutManager(requireContext(), orientation, false)
+        binding.comicsList.apply {
+            layoutManager = LinearLayoutManager(context, orientation, false)
+            adapter = comicsAdapter
+        }
+        binding.seriesList.apply {
+            layoutManager = LinearLayoutManager(requireContext(), orientation, false)
+            adapter = seriesAdapter
+        }
+
     }
 
     private fun setupTryAgainButton() {
@@ -55,6 +64,8 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
                 imageUrl = character?.imageUrl ?: ""
                 description = character?.description ?: ""
             }
+            comicsAdapter.submitList(character?.comics)
+            seriesAdapter.submitList(character?.seriesList)
         })
     }
 
