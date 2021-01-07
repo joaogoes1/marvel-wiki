@@ -30,6 +30,10 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
         setupTryAgainButton()
         observeViewState()
         observeViewType()
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.loadCharacters()
     }
 

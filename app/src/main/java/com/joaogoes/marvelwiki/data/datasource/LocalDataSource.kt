@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 interface LocalDataSource {
     suspend fun getFavorites(): Result<List<FavoriteEntity>, DatabaseError>
+    suspend fun getFavoritesId(): Result<List<Int>, DatabaseError>
     suspend fun saveFavorite(character: FavoriteEntity): Result<Unit, DatabaseError>
     suspend fun removeSavedFavorite(character: FavoriteEntity): Result<Unit, DatabaseError>
 }
@@ -19,6 +20,9 @@ class LocalDataSourceImpl @Inject constructor(
 ) : LocalDataSource {
     override suspend fun getFavorites(): Result<List<FavoriteEntity>, DatabaseError> =
         safeDatabaseCall { favoriteDao.getAllFavorites() }
+
+    override suspend fun getFavoritesId(): Result<List<Int>, DatabaseError> =
+        safeDatabaseCall { favoriteDao.getAllFavoritesId() }
 
     override suspend fun saveFavorite(character: FavoriteEntity): Result<Unit, DatabaseError> {
         val result = safeDatabaseCall { favoriteDao.insertFavorite(character) }

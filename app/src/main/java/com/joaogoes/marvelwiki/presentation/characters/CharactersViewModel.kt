@@ -20,7 +20,6 @@ class CharactersViewModel @Inject constructor(
 
     fun loadCharacters() {
         viewModelScope.launch {
-            viewState.state.postValue(LOADING)
             getCharacters()
                 .onSuccess { characterList ->
                     if (characterList.isEmpty()) {

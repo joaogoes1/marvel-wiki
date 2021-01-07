@@ -1,6 +1,5 @@
 package com.joaogoes.marvelwiki.data.repository
 
-import android.util.Log
 import com.joaogoes.marvelwiki.data.Result
 import com.joaogoes.marvelwiki.data.database.entity.FavoriteEntity
 import com.joaogoes.marvelwiki.data.datasource.DatabaseError
@@ -38,10 +37,15 @@ class CharacterRepositoryImpl @Inject constructor(
             is Result.Error -> result
         }
 
-    // TODO: Compare with favorites
-    // TODO: Handle error
     override suspend fun getCharacters(): Result<List<CharacterModel>, ServiceError> =
-        remoteDataSource.getCharacters().mapSuccess { it.toCharacterModelList() }
+        remoteDataSource.getCharacters().mapSuccess {
+            val favoritesIds = localDataSource.getFavoritesId().handleResult()
+            it.toCharacterModelList().map { character ->
+                if (favoritesIds?.find { id -> id == character.id } != null) {
+                    character.copy(isFavorite = true)
+                } else character
+            }
+        }
 
     override suspend fun getFavorites(): Result<List<FavoriteModel>, DatabaseError> =
         localDataSource.getFavorites().mapSuccess { list ->
@@ -69,7 +73,7 @@ class CharacterRepositoryImpl @Inject constructor(
             name = character.name,
             imageUrl = character.imageUrl
         )
-        return localDataSource.saveFavorite(entity)
+        return localDataSource.removeSavedFavorite(entity)
     }
 
     override suspend fun removeSavedFavorite(favoriteModel: FavoriteModel): Result<Unit, DatabaseError> =
