@@ -15,6 +15,6 @@ interface CharacterApi {
     @GET("/v1/public/characters")
     suspend fun getCharacters(
         @Query("orderBy") orderBy: String? = "name",
-        @Query("limit") limit: Int? = 20,
+        @Query("limit") limit: Int? = 100,
     ): CharacterApiResponse
 }
