@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.joaogoes.marvelwiki.data.model.ComicModel
 import com.joaogoes.marvelwiki.data.model.SeriesModel
-import com.joaogoes.marvelwiki.databinding.CharactersCardBinding
+import com.joaogoes.marvelwiki.databinding.HorizontalListCardItemBinding
 
 class CharacterDetailsSectionAdapter<E, T : CharacterDetailsSectionDiffUtil<E>>(private val diffUtil: T) :
     ListAdapter<E, CharacterDetailsSectionAdapter.CharacterViewHolder>(diffUtil) {
 
-    class CharacterViewHolder(val binding: CharactersCardBinding) :
+    class CharacterViewHolder(val binding: HorizontalListCardItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CharacterViewHolder(CharactersCardBinding.inflate(layoutInflater, parent, false))
+        return CharacterViewHolder(HorizontalListCardItemBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
@@ -46,7 +46,6 @@ object ComicsDiffUtil : CharacterDetailsSectionDiffUtil<ComicModel>() {
         holder.binding.apply {
             name = item.name
             imageUrl = item.resourceURI
-            favoriteButton.visibility = View.GONE
         }
     }
 }
@@ -66,7 +65,6 @@ object SeriesDiffUtil : CharacterDetailsSectionDiffUtil<SeriesModel>() {
         holder.binding.apply {
             name = item.name
             imageUrl = item.resourceURI
-            favoriteButton.visibility = View.GONE
         }
     }
 }
