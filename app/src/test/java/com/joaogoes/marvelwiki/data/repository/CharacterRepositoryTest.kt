@@ -1,9 +1,12 @@
 package com.joaogoes.marvelwiki.data.repository
 
 import com.joaogoes.marvelwiki.data.Result
+import com.joaogoes.marvelwiki.data.database.entity.FavoriteEntity
+import com.joaogoes.marvelwiki.data.datasource.DatabaseError
 import com.joaogoes.marvelwiki.data.datasource.LocalDataSource
 import com.joaogoes.marvelwiki.data.datasource.RemoteDataSource
 import com.joaogoes.marvelwiki.data.model.CharacterModel
+import com.joaogoes.marvelwiki.data.model.FavoriteModel
 import com.joaogoes.marvelwiki.data.response.CharacterApiResponse
 import com.joaogoes.marvelwiki.utils.CharacterApiResponseFactory
 import io.mockk.coEvery
@@ -11,6 +14,7 @@ import io.mockk.mockk
 import junit.framework.Assert.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Ignore
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
@@ -41,7 +45,7 @@ class CharacterRepositoryImplTest {
     @Test
     fun `getCharacter, return success and valid, return character with favorite`() =
         runBlockingTest {
-            val expected = makeValidCharacterModel(true)
+            val expected = makeValidCharacterModel(hasAFavorite = true)
             coEvery { remoteDataSource.getCharacter(1) } returns Result.Success(
                 makeValidCharacterResponseList()
             )
@@ -181,11 +185,194 @@ class CharacterRepositoryImplTest {
         }
     }
 
+    @Test
+    fun `getFavorites, return Success, return favorites list`() = runBlockingTest {
+        val expected = listOf(
+            FavoriteModel(1, "Batman", null),
+            FavoriteModel(2, "Batman", null),
+            FavoriteModel(3, "Batman", null),
+        )
+        val entities = listOf(
+            FavoriteEntity(1, "Batman", null),
+            FavoriteEntity(2, "Batman", null),
+            FavoriteEntity(3, "Batman", null),
+        )
+        coEvery { localDataSource.getFavorites() } returns Result.Success(entities)
+
+        val result = repository.getFavorites()
+
+        when (result) {
+            is Result.Success -> assertEquals(expected, result.value)
+            is Result.Error -> fail("Result should be Success")
+        }
+    }
+
+    @Test
+    fun `getFavorites, return UnknownError, return UnknownError`() = runBlockingTest {
+        coEvery { localDataSource.getFavorites() } returns Result.Error(DatabaseError.UnknownError)
+
+        val result = repository.getFavorites()
+
+        when (result) {
+            is Result.Success -> fail("Result should be Error")
+            is Result.Error -> assertEquals(DatabaseError.UnknownError, result.value)
+        }
+    }
+
+    @Test
+    fun `saveFavorite, success, return success Unit`() = runBlockingTest {
+        val characterModel = makeValidCharacterModel()
+        val entity = FavoriteEntity(
+            id = characterModel.id ?: -1,
+            name = characterModel.name ?: "",
+            imageUrl = characterModel.imageUrl
+        )
+        coEvery { localDataSource.saveFavorite(entity) } returns Result.Success(Unit)
+
+        val result = repository.saveFavorite(characterModel)
+
+        when (result) {
+            is Result.Success -> assertEquals(Unit, result.value)
+            is Result.Error -> fail("Result should be Success")
+        }
+    }
+
+    @Test
+    fun `saveFavorite, characterId null, return InvalidCharacterError`() = runBlockingTest {
+        val character = makeValidCharacterModel(id = null)
+
+        val result = repository.saveFavorite(character)
+
+        when (result) {
+            is Result.Success -> fail("Result should be Error")
+            is Result.Error -> assertEquals(DatabaseError.InvalidCharacter, result.value)
+        }
+    }
+
+    @Test
+    fun `saveFavorite, character name null, return InvalidCharacterError`() = runBlockingTest {
+        val character = makeValidCharacterModel(name = null)
+
+        val result = repository.saveFavorite(character)
+
+        when (result) {
+            is Result.Success -> fail("Result should be Error")
+            is Result.Error -> assertEquals(DatabaseError.InvalidCharacter, result.value)
+        }
+    }
+
+    @Test
+    fun `saveFavorite, data source return UnknownError, return UnknownError`() = runBlockingTest {
+        coEvery { localDataSource.saveFavorite(any()) } returns Result.Error(DatabaseError.UnknownError)
+
+        val result = repository.saveFavorite(makeValidCharacterModel())
+
+        when (result) {
+            is Result.Success -> fail("Result should be Error")
+            is Result.Error -> assertEquals(DatabaseError.UnknownError, result.value)
+        }
+    }
+
+    @Test
+    fun `removeFavorite, saveFavorite, success, return success Unit`() = runBlockingTest {
+        val characterModel = makeValidCharacterModel()
+        val entity = FavoriteEntity(
+            id = characterModel.id ?: -1,
+            name = characterModel.name ?: "",
+            imageUrl = characterModel.imageUrl
+        )
+        coEvery { localDataSource.removeSavedFavorite(entity) } returns Result.Success(Unit)
+
+        val result = repository.removeSavedFavorite(characterModel)
+
+        when (result) {
+            is Result.Success -> assertEquals(Unit, result.value)
+            is Result.Error -> fail("Result should be Success")
+        }
+    }
+
+    @Test
+    fun `removeFavorite, characterId null, return InvalidCharacterError`() = runBlockingTest {
+        val character = makeValidCharacterModel(id = null)
+
+        val result = repository.removeSavedFavorite(character)
+
+        when (result) {
+            is Result.Success -> fail("Result should be Error")
+            is Result.Error -> assertEquals(DatabaseError.InvalidCharacter, result.value)
+        }
+    }
+
+    @Test
+    fun `removeFavorite, character name null, return InvalidCharacterError`() = runBlockingTest {
+        val character = makeValidCharacterModel(name = null)
+
+        val result = repository.removeSavedFavorite(character)
+
+        when (result) {
+            is Result.Success -> fail("Result should be Error")
+            is Result.Error -> assertEquals(DatabaseError.InvalidCharacter, result.value)
+        }
+    }
+
+    @Test
+    fun `removeFavorite, data source return UnknownError, return UnknownError`() = runBlockingTest {
+        coEvery { localDataSource.removeSavedFavorite(any()) } returns Result.Error(DatabaseError.UnknownError)
+
+        val result = repository.removeSavedFavorite(makeValidCharacterModel())
+
+        when (result) {
+            is Result.Success -> fail("Result should be Error")
+            is Result.Error -> assertEquals(DatabaseError.UnknownError, result.value)
+        }
+    }
+
+    @Test
+    fun `removeFavorite with FavoriteModel, success, return success Unit`() = runBlockingTest {
+        val favoriteModel = FavoriteModel(
+            id = 1,
+            name = "IRON MAN",
+            imageUrl = null,
+        )
+        val favoriteEntity = FavoriteEntity(
+            id = favoriteModel.id,
+            name = favoriteModel.name,
+            imageUrl = favoriteModel.imageUrl
+        )
+        coEvery { localDataSource.removeSavedFavorite(favoriteEntity) } returns Result.Success(Unit)
+
+        val result = repository.removeSavedFavorite(favoriteModel)
+
+        when (result) {
+            is Result.Success -> assertEquals(Unit, result.value)
+            is Result.Error -> fail("Result should be Success")
+        }
+    }
+
+    @Test
+    fun `removeFavorite with FavoriteModel, data source return UnknownError, return UnknownError`() = runBlockingTest {
+        val favoriteModel = FavoriteModel(
+            id = 1,
+            name = "IRON MAN",
+            imageUrl = null,
+        )
+        coEvery { localDataSource.removeSavedFavorite(any()) } returns Result.Error(DatabaseError.UnknownError)
+
+        val result = repository.removeSavedFavorite(favoriteModel)
+
+        when (result) {
+            is Result.Success -> fail("Result should be Error")
+            is Result.Error -> assertEquals(DatabaseError.UnknownError, result.value)
+        }
+    }
+
     private fun makeValidCharacterModel(
-        hasAFavorite: Boolean = false
+        id: Int? = 1,
+        name: String? = "Batman",
+        hasAFavorite: Boolean = false,
     ) = CharacterModel(
-        id = 1,
-        name = "Batman",
+        id = id,
+        name = name,
         description = "Cavaleiro das trevas",
         resourceURI = null,
         urls = emptyList(),
