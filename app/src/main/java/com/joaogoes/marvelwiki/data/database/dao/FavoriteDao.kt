@@ -9,6 +9,9 @@ interface FavoriteDao {
     @Query("SELECT * FROM character ORDER BY name ASC")
     fun getAllFavorites(): List<FavoriteEntity>
 
+    @Query("SELECT id FROM character")
+    fun getAllFavoritesId(): List<Int>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavorite(favorite: FavoriteEntity): Long
 
