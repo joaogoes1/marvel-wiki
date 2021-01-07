@@ -103,10 +103,10 @@ fun CharacterResponse.toModel() = CharacterModel(
     resourceURI = resourceURI,
     urls = urls?.map { it.toCharacterUrl() } ?: emptyList(),
     imageUrl = thumbnail?.toUrlString(),
-    comics = comics.items?.map { it.toModel() } ?: emptyList(),
+    comics = comics?.items?.map { it.toModel() } ?: emptyList(),
     stories = stories?.items?.map { it.toModel() } ?: emptyList(),
     events = events?.items?.map { it.toModel() } ?: emptyList(),
-    seriesList = seriesList?.items?.map { it.toModel() } ?: emptyList(),
+    series = series?.items?.map { it.toModel() } ?: emptyList(),
 )
 
 fun URL.toCharacterUrl() = CharacterUrl(type, url)
