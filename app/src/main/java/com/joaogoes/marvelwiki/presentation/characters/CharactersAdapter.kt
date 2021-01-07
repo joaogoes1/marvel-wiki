@@ -7,18 +7,18 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.joaogoes.marvelwiki.R
 import com.joaogoes.marvelwiki.data.model.CharacterModel
-import com.joaogoes.marvelwiki.databinding.CharactersCardBinding
+import com.joaogoes.marvelwiki.databinding.VerticalGridCardItemBinding
 
 class CharactersAdapter(
     private val listener: CharactersFragmentListener
 ) : ListAdapter<CharacterModel, CharactersAdapter.CharacterViewHolder>(CharactersDiffUtil) {
 
-    class CharacterViewHolder(val binding: CharactersCardBinding) :
+    class CharacterViewHolder(val binding: VerticalGridCardItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CharacterViewHolder(CharactersCardBinding.inflate(layoutInflater, parent, false))
+        return CharacterViewHolder(VerticalGridCardItemBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {

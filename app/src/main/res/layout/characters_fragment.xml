@@ -19,7 +19,7 @@
                 android:padding="4dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                tools:listitem="@layout/characters_card" />
+                tools:listitem="@layout/vertical_grid_card_item" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
