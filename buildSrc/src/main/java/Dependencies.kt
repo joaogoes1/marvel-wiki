@@ -20,6 +20,7 @@ object AndroidX {
         const val constraintLayout = "2.0.4"
         const val cardView = "1.0.0"
         const val fragment = "1.2.5"
+        const val swipeToRefresh = "1.1.0"
     }
 
     const val core = "androidx.core:core-ktx:${Version.core}"
@@ -28,6 +29,7 @@ object AndroidX {
         "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
     const val cardView = "androidx.cardview:cardview:${Version.cardView}"
     const val fragment = "androidx.fragment:fragment:${Version.fragment}"
+    const val swipeToRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeToRefresh}"
 }
 
 object Dagger {
@@ -74,6 +76,13 @@ object Kotlin {
         }
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.android}"
     }
+}
+
+object Material {
+    object Version {
+        const val material = "1.2.1"
+    }
+    const val material = "com.google.android.material:material:${Version.material}"
 }
 
 object Moshi {
