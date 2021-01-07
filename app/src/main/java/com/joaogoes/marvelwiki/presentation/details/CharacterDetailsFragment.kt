@@ -96,7 +96,7 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
             }
             updateDescription(character?.description)
             updateComicList(character?.comics)
-            updateSeriesList(character?.seriesList)
+            updateSeriesList(character?.series)
             updateMenu(character?.isFavorite ?: false)
         })
     }

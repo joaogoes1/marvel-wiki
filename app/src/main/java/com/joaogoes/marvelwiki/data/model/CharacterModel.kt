@@ -10,7 +10,7 @@ data class CharacterModel(
     val comics: List<ComicModel>,
     val stories: List<StoryModel>,
     val events: List<EventModel>,
-    val seriesList: List<SeriesModel>,
+    val series: List<SeriesModel>,
     val isFavorite: Boolean = false
 )
 data class CharacterUrl(

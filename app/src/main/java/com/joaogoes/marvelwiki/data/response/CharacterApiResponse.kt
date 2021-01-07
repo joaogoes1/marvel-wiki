@@ -30,10 +30,10 @@ data class CharacterResponse(
     val resourceURI: String?,
     val urls: List<URL>?,
     val thumbnail: Image?,
-    val comics: ComicList,
+    val comics: ComicList?,
     val stories: StoryList?,
     val events: EventList?,
-    val seriesList: SeriesList?,
+    val series: SeriesList?,
 )
 
 @JsonClass(generateAdapter = true)
