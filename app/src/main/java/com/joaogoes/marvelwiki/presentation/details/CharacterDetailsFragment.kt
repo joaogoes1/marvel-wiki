@@ -69,10 +69,10 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
     }
 
     private fun setupTryAgainButton() {
-        binding.errorState.tryAgain.setOnClickListener {
+        binding.charactersFragmentErrorState.tryAgain.setOnClickListener {
             viewModel.loadCharacter(args.characterId)
         }
-        binding.noConnectionState.tryAgain.setOnClickListener {
+        binding.charactersFragmentNoConnectionState.tryAgain.setOnClickListener {
             viewModel.loadCharacter(args.characterId)
         }
     }
@@ -81,9 +81,9 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment), 
         viewModel.viewState.state.observe(viewLifecycleOwner, { state ->
             when (state) {
                 CharacterDetailsViewState.State.SUCCESS -> binding.showOnly(binding.characterDetailsContainer)
-                CharacterDetailsViewState.State.ERROR -> binding.showOnly(binding.errorState.root)
-                CharacterDetailsViewState.State.LOADING -> binding.showOnly(binding.loadingState.root)
-                CharacterDetailsViewState.State.NO_CONNECTION -> binding.showOnly(binding.noConnectionState.root)
+                CharacterDetailsViewState.State.ERROR -> binding.showOnly(binding.charactersFragmentErrorState.root)
+                CharacterDetailsViewState.State.LOADING -> binding.showOnly(binding.charactersFragmentLoadingState.root)
+                CharacterDetailsViewState.State.NO_CONNECTION -> binding.showOnly(binding.charactersFragmentNoConnectionState.root)
             }
         })
     }

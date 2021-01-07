@@ -2,6 +2,7 @@ package com.joaogoes.marvelwiki.presentation.characters
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,7 +26,7 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.charactersList.adapter = adapter
-        setupMenu()
+        setupSwitch()
         setupSwipeToRefresh()
         setupTryAgainButton()
         observeViewState()
@@ -37,20 +38,12 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
         viewModel.loadCharacters()
     }
 
-    private fun setupMenu() {
-        binding.charactersFragmentToolbar.inflateMenu(R.menu.characters_fragment_menu)
-        binding.charactersFragmentToolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.grid_mode -> {
-                    viewModel.viewState.viewType.postValue(CharactersAdapter.ViewType.GRID)
-                    true
-                }
-                R.id.list_mode -> {
-                    viewModel.viewState.viewType.postValue(CharactersAdapter.ViewType.LIST)
-                    true
-                }
-                else -> false
-            }
+    private fun setupSwitch() {
+        binding.charactersFragmentDisplayModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked)
+                viewModel.viewState.viewType.postValue(CharactersAdapter.ViewType.LIST)
+            else
+                viewModel.viewState.viewType.postValue(CharactersAdapter.ViewType.GRID)
         }
     }
 
@@ -63,17 +56,13 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
 
     private fun observeViewType() {
         viewModel.viewState.viewType.observe(viewLifecycleOwner, { viewType ->
-            val gridItem = binding.charactersFragmentToolbar.menu.findItem(R.id.grid_mode)
-            val listItem = binding.charactersFragmentToolbar.menu.findItem(R.id.list_mode)
             when (viewType) {
                 CharactersAdapter.ViewType.LIST -> {
-                    gridItem.isVisible = true
-                    listItem.isVisible = false
+                    binding.charactersFragmentDisplayModeSwitch.isChecked = true
                     binding.charactersList.layoutManager = LinearLayoutManager(requireContext())
                 }
                 CharactersAdapter.ViewType.GRID -> {
-                    listItem.isVisible = true
-                    gridItem.isVisible = false
+                    binding.charactersFragmentDisplayModeSwitch.isChecked = false
                     binding.charactersList.layoutManager = GridLayoutManager(requireContext(), 2)
                 }
             }
@@ -89,14 +78,11 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
         viewModel.viewState.state.observe(viewLifecycleOwner, { state ->
             binding.swipeToRefresh.isRefreshing = false
             when (state) {
-                CharactersViewState.State.EMPTY_STATE -> binding.showOnly(binding.emptyState.root)
-                CharactersViewState.State.SUCCESS -> {
-                    binding.showOnly(binding.swipeToRefresh)
-                    binding.charactersFragmentToolbar.visibility = View.VISIBLE
-                }
-                CharactersViewState.State.ERROR -> binding.showOnly(binding.errorState.root)
-                CharactersViewState.State.LOADING -> binding.showOnly(binding.loadingState.root)
-                CharactersViewState.State.NO_CONNECTION -> binding.showOnly(binding.noConnectionState.root)
+                CharactersViewState.State.EMPTY_STATE -> binding.showOnly(binding.charactersFragmentEmptyState.root)
+                CharactersViewState.State.SUCCESS -> binding.showOnly(binding.swipeToRefresh)
+                CharactersViewState.State.ERROR -> binding.showOnly(binding.charactersFragmentErrorState.root)
+                CharactersViewState.State.LOADING -> binding.showOnly(binding.charactersFragmentLoadingState.root)
+                CharactersViewState.State.NO_CONNECTION -> binding.showOnly(binding.charactersFragmentNoConnectionState.root)
             }
         })
     }
@@ -114,10 +100,10 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
     }
 
     private fun setupTryAgainButton() {
-        binding.noConnectionState.tryAgain.setOnClickListener {
+        binding.charactersFragmentNoConnectionState.tryAgain.setOnClickListener {
             viewModel.loadCharacters()
         }
-        binding.errorState.tryAgain.setOnClickListener {
+        binding.charactersFragmentErrorState.tryAgain.setOnClickListener {
             viewModel.loadCharacters()
         }
     }

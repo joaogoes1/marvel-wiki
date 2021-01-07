@@ -31,8 +31,14 @@ class CharacterRepositoryImpl @Inject constructor(
                 val item = result.value.data?.results?.get(0)
                 if (result.value.code == 404 || item == null)
                     Result.Error(ServiceError.NotFoundError)
-                else
-                    Result.Success(item.toModel())
+                else {
+                    val favoritesId = localDataSource.getFavoritesId().handleResult()
+                    val model = item.toModel()
+                    if (favoritesId?.find { id -> id == model.id } != null)
+                        Result.Success(model.copy(isFavorite = true))
+                    else
+                        Result.Success(model)
+                }
             }
             is Result.Error -> result
         }
@@ -40,6 +46,7 @@ class CharacterRepositoryImpl @Inject constructor(
     override suspend fun getCharacters(): Result<List<CharacterModel>, ServiceError> =
         remoteDataSource.getCharacters().mapSuccess {
             val favoritesIds = localDataSource.getFavoritesId().handleResult()
+
             it.toCharacterModelList().map { character ->
                 if (favoritesIds?.find { id -> id == character.id } != null) {
                     character.copy(isFavorite = true)
