@@ -33,6 +33,7 @@ class CharacterDetailsViewModel @Inject constructor(
             }
     }
 
+    // TODO: Handle error
     fun favoriteCharacter() = viewModelScope.launch {
         viewState.character.value?.let { character ->
             saveFavorite(character).onSuccess {
@@ -41,6 +42,7 @@ class CharacterDetailsViewModel @Inject constructor(
         }
     }
 
+    // TODO: Handle error
     fun removeFavoriteCharacter() = viewModelScope.launch {
         viewState.character.value?.let { character ->
             removeSavedFavorite(character).onSuccess {
