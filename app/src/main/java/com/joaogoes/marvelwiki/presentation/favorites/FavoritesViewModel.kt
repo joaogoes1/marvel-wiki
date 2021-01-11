@@ -30,13 +30,11 @@ class FavoritesViewModel @Inject constructor(
             }
     }
 
+    // TODO: Handle error
     fun removeFavorite(favorite: FavoriteModel) = viewModelScope.launch {
         removeSavedFavorite(favorite)
             .onSuccess {
                 loadFavorites()
-            }
-            .onError {
-                Unit
             }
     }
 }
