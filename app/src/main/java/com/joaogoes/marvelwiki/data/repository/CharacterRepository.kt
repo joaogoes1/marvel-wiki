@@ -1,8 +1,8 @@
 package com.joaogoes.marvelwiki.data.repository
 
 import com.joaogoes.marvelwiki.data.Result
+import com.joaogoes.marvelwiki.data.database.DatabaseError
 import com.joaogoes.marvelwiki.data.database.entity.FavoriteEntity
-import com.joaogoes.marvelwiki.data.datasource.DatabaseError
 import com.joaogoes.marvelwiki.data.datasource.LocalDataSource
 import com.joaogoes.marvelwiki.data.datasource.RemoteDataSource
 import com.joaogoes.marvelwiki.data.model.*

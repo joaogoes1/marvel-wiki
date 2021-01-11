@@ -5,6 +5,7 @@ import com.joaogoes.marvelwiki.data.service.CharacterApi
 import com.joaogoes.marvelwiki.data.service.NoConnectionException
 import com.joaogoes.marvelwiki.data.repository.ServiceError
 import com.joaogoes.marvelwiki.data.response.CharacterApiResponse
+import com.joaogoes.marvelwiki.data.service.safeCall
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,19 +25,4 @@ class RemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getCharacter(characterId: Int): Result<CharacterApiResponse, ServiceError> =
         safeCall { characterApi.getCharacter(characterId) }
-
 }
-
-private suspend fun <T> safeCall(
-    dispatcher: CoroutineDispatcher = Dispatchers.IO,
-    block: suspend () -> T,
-): Result<T, ServiceError> =
-    withContext(dispatcher) {
-        try {
-            Result.Success(block())
-        } catch (e: NoConnectionException){
-            Result.Error(ServiceError.NoConnectionError)
-        } catch (e: Exception) {
-            Result.Error(ServiceError.NetworkError)
-        }
-    }

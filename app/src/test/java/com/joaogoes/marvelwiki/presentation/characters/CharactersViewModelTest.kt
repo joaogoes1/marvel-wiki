@@ -2,7 +2,7 @@ package com.joaogoes.marvelwiki.presentation.characters
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.joaogoes.marvelwiki.data.Result
-import com.joaogoes.marvelwiki.data.datasource.DatabaseError
+import com.joaogoes.marvelwiki.data.database.DatabaseError
 import com.joaogoes.marvelwiki.data.model.CharacterModel
 import com.joaogoes.marvelwiki.data.repository.ServiceError
 import com.joaogoes.marvelwiki.domain.GetCharactersUseCase
@@ -114,7 +114,7 @@ class CharactersViewModelTest {
     }
 
     @Test
-    fun `Favorite character, on success and character is not favorite, change the list`(){
+    fun `Favorite character, on success and character is not favorite, change the list`() {
         val charactersList = makeCharacterList(false)
         prepareScenario(Result.Success(charactersList))
         viewModel.viewState.characters.observeForever {}
@@ -128,7 +128,7 @@ class CharactersViewModelTest {
     }
 
     @Test
-    fun `Favorite character, on success and character is favorite, change the list`(){
+    fun `Favorite character, on success and character is favorite, change the list`() {
         val charactersList = makeCharacterList(true)
         prepareScenario(Result.Success(charactersList))
         viewModel.viewState.characters.observeForever {}

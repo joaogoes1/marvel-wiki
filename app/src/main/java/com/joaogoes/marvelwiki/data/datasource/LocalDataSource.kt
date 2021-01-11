@@ -1,8 +1,10 @@
 package com.joaogoes.marvelwiki.data.datasource
 
 import com.joaogoes.marvelwiki.data.Result
+import com.joaogoes.marvelwiki.data.database.DatabaseError
 import com.joaogoes.marvelwiki.data.database.dao.FavoriteDao
 import com.joaogoes.marvelwiki.data.database.entity.FavoriteEntity
+import com.joaogoes.marvelwiki.data.database.safeDatabaseCall
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,21 +42,5 @@ class LocalDataSourceImpl @Inject constructor(
             Result.Success(Unit)
         else
             Result.Error(DatabaseError.UnknownError)
-    }
-}
-
-sealed class DatabaseError {
-    object InvalidCharacter : DatabaseError()
-    object UnknownError : DatabaseError()
-}
-
-suspend fun <T> safeDatabaseCall(
-    dispatcher: CoroutineDispatcher = Dispatchers.IO,
-    block: suspend () -> T,
-): Result<T, DatabaseError> = withContext(dispatcher) {
-    return@withContext try {
-        Result.Success(block())
-    } catch (t: Throwable) {
-        Result.Error(DatabaseError.UnknownError)
     }
 }
