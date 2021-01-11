@@ -1,8 +1,8 @@
 package com.joaogoes.marvelwiki.data.repository
 
 import com.joaogoes.marvelwiki.data.Result
+import com.joaogoes.marvelwiki.data.database.DatabaseError
 import com.joaogoes.marvelwiki.data.database.entity.FavoriteEntity
-import com.joaogoes.marvelwiki.data.datasource.DatabaseError
 import com.joaogoes.marvelwiki.data.datasource.LocalDataSource
 import com.joaogoes.marvelwiki.data.datasource.RemoteDataSource
 import com.joaogoes.marvelwiki.data.model.CharacterModel
@@ -14,7 +14,6 @@ import io.mockk.mockk
 import junit.framework.Assert.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Ignore
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
@@ -63,19 +62,24 @@ class CharacterRepositoryImplTest {
         }
 
     @Test
-    fun `getCharacter, return success but element is null, return NotFoundError`() = runBlockingTest {
-        coEvery { remoteDataSource.getCharacter(any()) } returns Result.Success(
-            CharacterApiResponseFactory.make(data = CharacterApiResponseFactory.makeCharacterDataContainer(null))
-        )
-        coEvery { localDataSource.getFavoritesId() } returns Result.Success(emptyList())
+    fun `getCharacter, return success but element is null, return NotFoundError`() =
+        runBlockingTest {
+            coEvery { remoteDataSource.getCharacter(any()) } returns Result.Success(
+                CharacterApiResponseFactory.make(
+                    data = CharacterApiResponseFactory.makeCharacterDataContainer(
+                        null
+                    )
+                )
+            )
+            coEvery { localDataSource.getFavoritesId() } returns Result.Success(emptyList())
 
-        val result = repository.getCharacter(1)
+            val result = repository.getCharacter(1)
 
-        when (result) {
-            is Result.Success -> fail("Result should be Error")
-            is Result.Error -> assertEquals(ServiceError.NotFoundError, result.value)
+            when (result) {
+                is Result.Success -> fail("Result should be Error")
+                is Result.Error -> assertEquals(ServiceError.NotFoundError, result.value)
+            }
         }
-    }
 
     @Test
     fun `getCharacter, return success but 404, return NotFoundError`() = runBlockingTest {
@@ -350,21 +354,24 @@ class CharacterRepositoryImplTest {
     }
 
     @Test
-    fun `removeFavorite with FavoriteModel, data source return UnknownError, return UnknownError`() = runBlockingTest {
-        val favoriteModel = FavoriteModel(
-            id = 1,
-            name = "IRON MAN",
-            imageUrl = null,
-        )
-        coEvery { localDataSource.removeSavedFavorite(any()) } returns Result.Error(DatabaseError.UnknownError)
+    fun `removeFavorite with FavoriteModel, data source return UnknownError, return UnknownError`() =
+        runBlockingTest {
+            val favoriteModel = FavoriteModel(
+                id = 1,
+                name = "IRON MAN",
+                imageUrl = null,
+            )
+            coEvery { localDataSource.removeSavedFavorite(any()) } returns Result.Error(
+                DatabaseError.UnknownError
+            )
 
-        val result = repository.removeSavedFavorite(favoriteModel)
+            val result = repository.removeSavedFavorite(favoriteModel)
 
-        when (result) {
-            is Result.Success -> fail("Result should be Error")
-            is Result.Error -> assertEquals(DatabaseError.UnknownError, result.value)
+            when (result) {
+                is Result.Success -> fail("Result should be Error")
+                is Result.Error -> assertEquals(DatabaseError.UnknownError, result.value)
+            }
         }
-    }
 
     private fun makeValidCharacterModel(
         id: Int? = 1,
