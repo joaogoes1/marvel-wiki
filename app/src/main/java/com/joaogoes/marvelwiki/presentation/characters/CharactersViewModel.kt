@@ -7,7 +7,6 @@ import com.joaogoes.marvelwiki.data.repository.ServiceError
 import com.joaogoes.marvelwiki.domain.GetCharactersUseCase
 import com.joaogoes.marvelwiki.domain.RemoveSavedFavoriteUseCase
 import com.joaogoes.marvelwiki.domain.SaveFavoriteUseCase
-import com.joaogoes.marvelwiki.presentation.characters.CharactersViewState.State.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,17 +23,17 @@ class CharactersViewModel @Inject constructor(
                 .onSuccess { characterList ->
                     if (characterList.isEmpty()) {
                         viewState.characters.postValue(characterList)
-                        viewState.state.postValue(EMPTY_STATE)
+                        viewState.state.postValue(CharactersViewState.State.EMPTY_STATE)
                     } else {
                         viewState.characters.postValue(characterList)
-                        viewState.state.postValue(SUCCESS)
+                        viewState.state.postValue(CharactersViewState.State.SUCCESS)
                     }
                 }
                 .onError { error ->
                     if (error is ServiceError.NoConnectionError)
-                        viewState.state.postValue(NO_CONNECTION)
+                        viewState.state.postValue(CharactersViewState.State.NO_CONNECTION)
                     else
-                        viewState.state.postValue(ERROR)
+                        viewState.state.postValue(CharactersViewState.State.ERROR)
                 }
         }
     }

@@ -5,8 +5,21 @@ import com.joaogoes.marvelwiki.data.database.DatabaseError
 import com.joaogoes.marvelwiki.data.database.entity.FavoriteEntity
 import com.joaogoes.marvelwiki.data.datasource.LocalDataSource
 import com.joaogoes.marvelwiki.data.datasource.RemoteDataSource
-import com.joaogoes.marvelwiki.data.model.*
-import com.joaogoes.marvelwiki.data.response.*
+import com.joaogoes.marvelwiki.data.model.CharacterModel
+import com.joaogoes.marvelwiki.data.model.CharacterUrl
+import com.joaogoes.marvelwiki.data.model.ComicModel
+import com.joaogoes.marvelwiki.data.model.EventModel
+import com.joaogoes.marvelwiki.data.model.FavoriteModel
+import com.joaogoes.marvelwiki.data.model.SeriesModel
+import com.joaogoes.marvelwiki.data.model.StoryModel
+import com.joaogoes.marvelwiki.data.response.CharacterApiResponse
+import com.joaogoes.marvelwiki.data.response.CharacterResponse
+import com.joaogoes.marvelwiki.data.response.ComicSummary
+import com.joaogoes.marvelwiki.data.response.EventSummary
+import com.joaogoes.marvelwiki.data.response.Image
+import com.joaogoes.marvelwiki.data.response.SeriesSummary
+import com.joaogoes.marvelwiki.data.response.StorySummary
+import com.joaogoes.marvelwiki.data.response.URL
 import javax.inject.Inject
 
 interface CharacterRepository {
