@@ -11,9 +11,12 @@ import com.joaogoes.marvelwiki.data.response.CharacterApiResponse
 import com.joaogoes.marvelwiki.utils.CharacterApiResponseFactory
 import io.mockk.coEvery
 import io.mockk.mockk
-import junit.framework.Assert.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Test
 
 @ExperimentalCoroutinesApi

@@ -8,7 +8,7 @@ import com.joaogoes.marvelwiki.data.database.safeDatabaseCall
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import junit.framework.Assert.fail
+import org.junit.Assert.fail
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
