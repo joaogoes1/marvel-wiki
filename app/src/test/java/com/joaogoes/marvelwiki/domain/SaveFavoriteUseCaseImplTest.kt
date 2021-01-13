@@ -9,7 +9,8 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
@@ -29,8 +30,8 @@ class SaveFavoriteUseCaseImplTest {
         val result = useCase(expected)
 
         coVerify(exactly = 1) { repository.saveFavorite(expected) }
-        Assert.assertTrue(result is Result.Success)
-        Assert.assertEquals(Unit, (result as Result.Success).value)
+        assertTrue(result is Result.Success)
+        assertEquals(Unit, (result as Result.Success).value)
     }
 
     @Test
@@ -44,8 +45,8 @@ class SaveFavoriteUseCaseImplTest {
         val result = useCase(expected)
 
         coVerify(exactly = 1) { repository.saveFavorite(expected) }
-        Assert.assertTrue(result is Result.Error)
-        Assert.assertEquals(DatabaseError.UnknownError, (result as Result.Error).value)
+        assertTrue(result is Result.Error)
+        assertEquals(DatabaseError.UnknownError, (result as Result.Error).value)
     }
 
     private fun prepareScenario(
