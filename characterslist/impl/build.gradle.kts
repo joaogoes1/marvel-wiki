@@ -98,7 +98,4 @@ dependencies {
     testImplementation(Test.Mockk.mockk)
     testImplementation(Test.OkHttpTest.mockWebServer)
     testImplementation(Test.Room.room)
-
-    androidTestImplementation(Test.Espresso.core)
-    androidTestImplementation(Test.JUnit.testExt)
 }

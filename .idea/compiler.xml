@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="marvel-wiki.buildSrc" target="1.8" />
+      <module name="Marvel_Wiki.app" target="1.8" />
+      <module name="Marvel_Wiki.buildSrc" target="1.8" />
+      <module name="Marvel_Wiki.characterdetails.impl" target="1.8" />
+      <module name="Marvel_Wiki.characterslist.impl" target="1.8" />
+      <module name="Marvel_Wiki.favorites.impl" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
