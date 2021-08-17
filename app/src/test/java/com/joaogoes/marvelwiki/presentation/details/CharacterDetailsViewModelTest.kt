@@ -1,21 +1,19 @@
 package com.joaogoes.marvelwiki.presentation.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.joaogoes.marvelwiki.data.Result
 import com.joaogoes.marvelwiki.data.database.DatabaseError
 import com.joaogoes.marvelwiki.data.model.CharacterModel
 import com.joaogoes.marvelwiki.data.repository.ServiceError
-import com.joaogoes.marvelwiki.domain.GetCharacterUseCase
-import com.joaogoes.marvelwiki.domain.RemoveSavedFavoriteUseCase
+import com.joaogoes.marvelwiki.characters.domain.GetCharacterUseCase
+import com.joaogoes.marvelwiki.characters.presentation.details.CharacterDetailsViewModel
+import com.joaogoes.marvelwiki.characters.presentation.details.CharacterDetailsViewState
+import com.joaogoes.marvelwiki.favorites.domain.RemoveSavedFavoriteUseCase
 import com.joaogoes.marvelwiki.domain.SaveFavoriteUseCase
-import com.joaogoes.marvelwiki.presentation.characters.CharactersViewState
 import com.joaogoes.marvelwiki.utils.MainCoroutineRule
 import com.joaogoes.marvelwiki.utils.getOrAwaitValue
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull

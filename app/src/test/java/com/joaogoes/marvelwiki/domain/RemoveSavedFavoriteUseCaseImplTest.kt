@@ -3,7 +3,7 @@ package com.joaogoes.marvelwiki.domain
 import com.joaogoes.marvelwiki.data.Result
 import com.joaogoes.marvelwiki.data.database.DatabaseError
 import com.joaogoes.marvelwiki.data.model.CharacterModel
-import com.joaogoes.marvelwiki.data.repository.CharacterRepository
+import com.joaogoes.marvelwiki.characters.data.repository.CharacterRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

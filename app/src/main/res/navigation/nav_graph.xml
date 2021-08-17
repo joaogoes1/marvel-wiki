@@ -6,21 +6,6 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/charactersFragment"
-        android:name="com.joaogoes.marvelwiki.presentation.characters.CharactersFragment"
-        android:label="CharactersFragment"
-        tools:layout="@layout/characters_fragment">
-    </fragment>
-    <fragment
-        android:id="@+id/characterDetailsFragment"
-        android:name="com.joaogoes.marvelwiki.presentation.details.CharacterDetailsFragment"
-        android:label="CharacterDetailsFragment"
-        tools:layout="@layout/character_details_fragment">
-        <argument
-            android:name="characterId"
-            app:argType="integer" />
-    </fragment>
-    <fragment
         android:id="@+id/homeFragment"
         android:name="com.joaogoes.marvelwiki.presentation.home.HomeFragment"
         android:label="HomeFragment"
@@ -29,4 +14,7 @@
             android:id="@+id/action_homeFragment_to_characterDetailsFragment"
             app:destination="@id/characterDetailsFragment" />
     </fragment>
+
+    <include app:graph="@navigation/characters_graph" />
+    <include app:graph="@navigation/favorites_graph" />
 </navigation>

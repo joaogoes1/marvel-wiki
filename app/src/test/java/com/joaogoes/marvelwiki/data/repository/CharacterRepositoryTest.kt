@@ -1,13 +1,12 @@
 package com.joaogoes.marvelwiki.data.repository
 
-import com.joaogoes.marvelwiki.data.Result
+import com.joaogoes.marvelwiki.characters.data.repository.CharacterRepositoryImpl
 import com.joaogoes.marvelwiki.data.database.DatabaseError
 import com.joaogoes.marvelwiki.data.database.entity.FavoriteEntity
 import com.joaogoes.marvelwiki.data.datasource.LocalDataSource
-import com.joaogoes.marvelwiki.data.datasource.RemoteDataSource
+import com.joaogoes.marvelwiki.characters.data.datasource.RemoteDataSource
 import com.joaogoes.marvelwiki.data.model.CharacterModel
-import com.joaogoes.marvelwiki.data.model.FavoriteModel
-import com.joaogoes.marvelwiki.data.response.CharacterApiResponse
+import com.joaogoes.marvelwiki.characters.data.response.CharacterApiResponse
 import com.joaogoes.marvelwiki.utils.CharacterApiResponseFactory
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -195,9 +194,9 @@ class CharacterRepositoryImplTest {
     @Test
     fun `getFavorites, return Success, return favorites list`() = runBlockingTest {
         val expected = listOf(
-            FavoriteModel(1, "Batman", null),
-            FavoriteModel(2, "Batman", null),
-            FavoriteModel(3, "Batman", null),
+            com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(1, "Batman", null),
+            com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(2, "Batman", null),
+            com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(3, "Batman", null),
         )
         val entities = listOf(
             FavoriteEntity(1, "Batman", null),
@@ -336,7 +335,7 @@ class CharacterRepositoryImplTest {
 
     @Test
     fun `removeFavorite with FavoriteModel, success, return success Unit`() = runBlockingTest {
-        val favoriteModel = FavoriteModel(
+        val favoriteModel = com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(
             id = 1,
             name = "IRON MAN",
             imageUrl = null,
@@ -359,7 +358,7 @@ class CharacterRepositoryImplTest {
     @Test
     fun `removeFavorite with FavoriteModel, data source return UnknownError, return UnknownError`() =
         runBlockingTest {
-            val favoriteModel = FavoriteModel(
+            val favoriteModel = com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(
                 id = 1,
                 name = "IRON MAN",
                 imageUrl = null,

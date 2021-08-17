@@ -1,15 +1,13 @@
 package com.joaogoes.marvelwiki.presentation.characters
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.joaogoes.marvelwiki.data.Result
 import com.joaogoes.marvelwiki.data.database.DatabaseError
 import com.joaogoes.marvelwiki.data.model.CharacterModel
 import com.joaogoes.marvelwiki.data.repository.ServiceError
-import com.joaogoes.marvelwiki.domain.GetCharactersUseCase
-import com.joaogoes.marvelwiki.domain.RemoveSavedFavoriteUseCase
+import com.joaogoes.marvelwiki.characters.domain.GetCharactersUseCase
+import com.joaogoes.marvelwiki.favorites.domain.RemoveSavedFavoriteUseCase
 import com.joaogoes.marvelwiki.domain.SaveFavoriteUseCase
 import com.joaogoes.marvelwiki.utils.MainCoroutineRule
-import com.joaogoes.marvelwiki.utils.getOrAwaitValue
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -32,7 +30,7 @@ class CharactersViewModelTest {
     private val getCharactersUseCase = mockk<GetCharactersUseCase>()
     private val saveFavorite = mockk<SaveFavoriteUseCase>()
     private val removeSavedFavoriteUseCase = mockk<RemoveSavedFavoriteUseCase>()
-    private val viewModel = CharactersViewModel(
+    private val viewModel = com.joaogoes.characterslist.presentation.CharactersViewModel(
         getCharactersUseCase,
         saveFavorite,
         removeSavedFavoriteUseCase,
@@ -53,7 +51,7 @@ class CharactersViewModelTest {
         val state = viewModel.viewState.state.getOrAwaitValue()
         val list = viewModel.viewState.characters.getOrAwaitValue()
 
-        assertEquals(CharactersViewState.State.SUCCESS, state)
+        assertEquals(com.joaogoes.characterslist.presentation.CharactersViewState.State.SUCCESS, state)
         assertEquals(charactersList, list)
     }
 
@@ -68,7 +66,7 @@ class CharactersViewModelTest {
         val state = viewModel.viewState.state.getOrAwaitValue()
         val list = viewModel.viewState.characters.getOrAwaitValue()
 
-        assertEquals(CharactersViewState.State.EMPTY_STATE, state)
+        assertEquals(com.joaogoes.characterslist.presentation.CharactersViewState.State.EMPTY_STATE, state)
         assertEquals(0, list.size)
     }
 
@@ -79,7 +77,7 @@ class CharactersViewModelTest {
         viewModel.loadCharacters()
 
         viewModel.viewState.state.observeForever {}
-        assertEquals(viewModel.viewState.state.getOrAwaitValue(), CharactersViewState.State.ERROR)
+        assertEquals(viewModel.viewState.state.getOrAwaitValue(), com.joaogoes.characterslist.presentation.CharactersViewState.State.ERROR)
     }
 
     @Test
@@ -91,7 +89,7 @@ class CharactersViewModelTest {
         viewModel.viewState.state.observeForever {}
         assertEquals(
             viewModel.viewState.state.getOrAwaitValue(),
-            CharactersViewState.State.NO_CONNECTION
+            com.joaogoes.characterslist.presentation.CharactersViewState.State.NO_CONNECTION
         )
     }
 

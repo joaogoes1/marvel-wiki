@@ -2,8 +2,8 @@ package com.joaogoes.marvelwiki.domain
 
 import com.joaogoes.marvelwiki.data.Result
 import com.joaogoes.marvelwiki.data.database.DatabaseError
-import com.joaogoes.marvelwiki.data.model.FavoriteModel
-import com.joaogoes.marvelwiki.data.repository.CharacterRepository
+import com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel
+import com.joaogoes.marvelwiki.characters.data.repository.CharacterRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -21,7 +21,7 @@ class GetFavoritesUseCaseImplTest {
     @Test
     fun `Call invoke, repository return success, return Success with the list`() = runBlockingTest {
         val expected = listOf(
-            FavoriteModel(
+            com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(
                 1, "Iron Man", null
             )
         )
@@ -46,7 +46,7 @@ class GetFavoritesUseCaseImplTest {
     }
 
     private fun prepareScenario(
-        result: Result<List<FavoriteModel>, DatabaseError>
+        result: Result<List<com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel>, DatabaseError>
     ) {
         coEvery { repository.getFavorites() } returns result
     }

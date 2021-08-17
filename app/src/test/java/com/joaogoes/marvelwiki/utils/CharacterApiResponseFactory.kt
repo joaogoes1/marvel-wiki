@@ -1,14 +1,14 @@
 package com.joaogoes.marvelwiki.utils
 
-import com.joaogoes.marvelwiki.data.response.CharacterApiResponse
-import com.joaogoes.marvelwiki.data.response.CharacterDataContainer
-import com.joaogoes.marvelwiki.data.response.CharacterResponse
-import com.joaogoes.marvelwiki.data.response.ComicList
-import com.joaogoes.marvelwiki.data.response.EventList
-import com.joaogoes.marvelwiki.data.response.Image
-import com.joaogoes.marvelwiki.data.response.SeriesList
-import com.joaogoes.marvelwiki.data.response.StoryList
-import com.joaogoes.marvelwiki.data.response.URL
+import com.joaogoes.marvelwiki.characters.data.response.CharacterApiResponse
+import com.joaogoes.marvelwiki.characters.data.response.CharacterDataContainer
+import com.joaogoes.marvelwiki.characters.data.response.CharacterResponse
+import com.joaogoes.marvelwiki.characters.data.response.ComicList
+import com.joaogoes.marvelwiki.characters.data.response.EventList
+import com.joaogoes.marvelwiki.characters.data.response.Image
+import com.joaogoes.marvelwiki.characters.data.response.SeriesList
+import com.joaogoes.marvelwiki.characters.data.response.StoryList
+import com.joaogoes.marvelwiki.characters.data.response.URL
 
 
 object CharacterApiResponseFactory {

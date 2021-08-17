@@ -1,5 +1,5 @@
 object App {
-    const val kotlinVersion = "1.4.21"
+    const val kotlinVersion = "1.5.21"
     const val compileSdk = 30
     const val buildToolsVersion = "30.0.3"
     const val minSdk = 21
@@ -7,10 +7,13 @@ object App {
     const val versionCode = 1
     const val versionCodeName = "1.0.0"
     const val applicationId = "com.joaogoes.marvelwiki"
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0"
-    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    const val safeArgsGradlePlugin =
-        "androidx.navigation:navigation-safe-args-gradle-plugin:${Jetpack.Navigation.Version.navigation}"
+
+    object GradlePlugins {
+        const val android = "com.android.tools.build:gradle:7.0.0"
+        const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Jetpack.Navigation.Version.navigation}"
+        const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.Version.hilt}"
+    }
 }
 
 object AndroidX {
@@ -32,18 +35,6 @@ object AndroidX {
     const val swipeToRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeToRefresh}"
 }
 
-object Dagger {
-    object Version {
-        const val dagger = "2.30.1"
-    }
-
-    private const val dagger = "com.google.dagger"
-    const val android = "$dagger:dagger-android:${Version.dagger}"
-    const val androidSupport = "$dagger:dagger-android-support:${Version.dagger}"
-    const val androidProcessor = "$dagger:dagger-android-processor:${Version.dagger}"
-    const val compiler = "$dagger:dagger-compiler:${Version.dagger}"
-}
-
 object Glide {
     object Version {
         const val glide = "4.11.0"
@@ -52,6 +43,21 @@ object Glide {
     private const val base = "com.github.bumptech.glide"
     const val core = "$base:glide:${Version.glide}"
     const val compiler = "$base:compiler:${Version.glide}"
+}
+
+object Hilt {
+    object Version {
+        const val hilt = "2.38.1"
+    }
+
+    const val hilt = "com.google.dagger:hilt-android:${Version.hilt}"
+    const val compiler = "com.google.dagger:hilt-compiler:${Version.hilt}"
+    // For instrumentation tests
+    const val instrumentationTest = "com.google.dagger:hilt-android-testing:${Version.hilt}"
+    const val instrumentationTestCompiler = "com.google.dagger:hilt-compiler:${Version.hilt}"
+    // For local unit tests
+    const val unitTest = "com.google.dagger:hilt-android-testing:${Version.hilt}"
+    const val unitTestCompiler = "com.google.dagger:hilt-compiler:${Version.hilt}"
 }
 
 object Jetpack {
@@ -87,7 +93,7 @@ object Material {
 
 object Moshi {
     object Version {
-        const val codegen = "1.9.3"
+        const val codegen = "1.12.0"
     }
 
     const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:${Version.codegen}"
@@ -124,11 +130,10 @@ object Room {
 
 object ViewBinding {
     object Version {
-        const val viewBinding = "1.4.0"
+        const val viewBinding = "1.4.6"
     }
 
-    private const val viewBinding = "com.kirich1409.viewbindingpropertydelegate"
-    const val noReflection = "$viewBinding:vbpd-noreflection:${Version.viewBinding}"
+    const val viewBinding = "com.github.kirich1409:viewbindingpropertydelegate-noreflection:${Version.viewBinding}"
 }
 
 object Test {

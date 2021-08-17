@@ -1,11 +1,11 @@
 package com.joaogoes.marvelwiki.presentation.favorites
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.joaogoes.marvelwiki.data.Result
 import com.joaogoes.marvelwiki.data.database.DatabaseError
-import com.joaogoes.marvelwiki.data.model.FavoriteModel
 import com.joaogoes.marvelwiki.domain.GetFavoritesUseCase
-import com.joaogoes.marvelwiki.domain.RemoveFavoriteUseCase
+import com.joaogoes.marvelwiki.favorites.domain.RemoveFavoriteUseCase
+import com.joaogoes.marvelwiki.favorites.presentation.FavoriteViewState
+import com.joaogoes.marvelwiki.favorites.presentation.FavoritesViewModel
 import com.joaogoes.marvelwiki.utils.MainCoroutineRule
 import com.joaogoes.marvelwiki.utils.getOrAwaitValue
 import io.mockk.coEvery
@@ -84,24 +84,24 @@ class FavoritesViewModelTest {
         verify(exactly = 2) { viewModel.loadFavorites() }
     }
 
-    private fun makeFavorite() = FavoriteModel(
+    private fun makeFavorite() = com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(
         id = 123,
         name = "Captain America",
         imageUrl = null,
     )
 
     private fun makeFavoriteList() = listOf(
-        FavoriteModel(
+        com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(
             id = 1,
             name = "Iron Man",
             imageUrl = null,
         ),
-        FavoriteModel(
+        com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(
             id = 2,
             name = "Agent Zero",
             imageUrl = null,
         ),
-        FavoriteModel(
+        com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel(
             id = 3,
             name = "Ajak",
             imageUrl = null,
@@ -109,7 +109,7 @@ class FavoritesViewModelTest {
     )
 
     private fun prepareScenario(
-        loadFavoritesResult: Result<List<FavoriteModel>, DatabaseError> = Result.Success(
+        loadFavoritesResult: Result<List<com.joaogoes.marvelwiki.favorites.data.model.FavoriteModel>, DatabaseError> = Result.Success(
             makeFavoriteList()
         ),
         removeSavedFavoriteResult: Result<Unit, DatabaseError> = Result.Success(Unit),

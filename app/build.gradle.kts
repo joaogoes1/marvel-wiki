@@ -6,19 +6,19 @@ val privateKey: String = gradleLocalProperties(rootDir).getProperty("PRIVATE_KEY
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
-    compileSdkVersion(App.compileSdk)
-    buildToolsVersion(App.buildToolsVersion)
+    compileSdk = App.compileSdk
+    buildToolsVersion = App.buildToolsVersion
 
     defaultConfig {
         applicationId = App.applicationId
-        minSdkVersion(App.minSdk)
-        targetSdkVersion(App.targetSdk)
+        minSdk = App.minSdk
+        targetSdk = App.targetSdk
         versionCode = App.versionCode
         versionName = App.versionCodeName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -50,11 +50,8 @@ android {
         dataBinding = true
         viewBinding = true
     }
-    packagingOptions {
-        pickFirst("META-INF/*")
-        pickFirst("**/META-INF/MANIFEST.MF")
-    }
 }
+
 dependencies {
     implementation(Kotlin.kotlinStdLib)
     implementation(Kotlin.Coroutines.android)
@@ -67,8 +64,7 @@ dependencies {
     implementation(OkHttp.core)
     implementation(Glide.core)
     implementation(OkHttp.loggingInterceptor)
-    implementation(Dagger.android)
-    implementation(Dagger.androidSupport)
+    implementation(Hilt.hilt)
     implementation(Jetpack.Navigation.featureModule)
     implementation(Jetpack.Navigation.fragment)
     implementation(Jetpack.Navigation.ui)
@@ -78,12 +74,20 @@ dependencies {
     implementation(Retrofit.moshiConverter)
     implementation(Room.runtime)
     implementation(Room.ktx)
-    implementation(ViewBinding.noReflection)
+    implementation(ViewBinding.viewBinding)
 
-    kapt(Dagger.androidProcessor)
-    kapt(Dagger.compiler)
+    implementation(project(Modules.charactersPublic))
+    implementation(project(Modules.charactersImpl))
+    implementation(project(Modules.database))
+    implementation(project(Modules.favoritesPublic))
+    implementation(project(Modules.favoritesImpl))
+    implementation(project(Modules.networkPublic))
+    implementation(project(Modules.networkImpl))
+    implementation(project(Modules.utils))
+
     kapt(Glide.compiler)
     kapt(Room.compiler)
+    kapt(Hilt.compiler)
 
     testImplementation(Test.AndroidX.coreTesting)
     testImplementation(Test.JUnit.jUnit)
