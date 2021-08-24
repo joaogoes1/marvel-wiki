@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.joaogoes.favorites.R
-import com.joaogoes.favorites.databinding.VerticalGridCardItemBinding
+import com.joaogoes.favorites.databinding.FavoriteVerticalGridCardItemBinding
 
 
 class FavoriteAdapter(
@@ -15,14 +15,14 @@ class FavoriteAdapter(
     FavoritesDiffUtil
 ) {
 
-    class FavoritesViewHolder(val binding: VerticalGridCardItemBinding) :
+    class FavoritesViewHolder(val binding: FavoriteVerticalGridCardItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
         return FavoritesViewHolder(
-            VerticalGridCardItemBinding.inflate(layoutInflater, parent, false)
+            FavoriteVerticalGridCardItemBinding.inflate(layoutInflater, parent, false)
         )
     }
 

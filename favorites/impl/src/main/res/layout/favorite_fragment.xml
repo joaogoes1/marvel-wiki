@@ -14,7 +14,7 @@
             android:padding="4dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
-            tools:listitem="@layout/vertical_grid_card_item" />
+            tools:listitem="@layout/favorite_vertical_grid_card_item" />
 
         <include
             android:id="@+id/favorites_fragment_empty_state"

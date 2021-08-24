@@ -1,7 +1,8 @@
 package com.joaogoes.marvelwiki.characters.navigation
 
+import android.os.Bundle
 import androidx.navigation.NavController
-import com.joaogoes.marvelwiki.characters.presentation.characterslist.CharactersFragment
+import com.joaogoes.marvelwiki.characters.R
 import javax.inject.Inject
 
 
@@ -10,10 +11,15 @@ class CharactersNavigatorImpl @Inject constructor(
 ) : CharactersNavigator {
 
     override fun openCharactersList() {
-        TODO("Not yet implemented")
+        navController.navigate(R.id.characters_list)
     }
 
     override fun openCharacterDetails(characterId: Int) {
-//        val action = CharactersFragmentDirections.openCharacterDetailsFragment()
+        if (navController.currentDestination == null || navController.currentDestination?.id == navController.graph.startDestination) {
+            navController.navigate(
+                R.id.open_character_details_fragment,
+                Bundle().apply { putInt("characterId", characterId) }
+            )
+        }
     }
 }

@@ -12,9 +12,8 @@
         tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_characterDetailsFragment"
-            app:destination="@id/characterDetailsFragment" />
+            app:destination="@id/open_character_details_fragment" />
     </fragment>
 
     <include app:graph="@navigation/characters_graph" />
-    <include app:graph="@navigation/favorites_graph" />
 </navigation>
