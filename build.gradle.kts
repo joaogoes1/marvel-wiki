@@ -11,8 +11,6 @@ buildscript {
         classpath(App.GradlePlugins.kotlin)
         classpath(App.GradlePlugins.safeArgs)
         classpath(App.GradlePlugins.hilt)
-        classpath("com.android.tools.build:gradle:7.0.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
     }
 }
 

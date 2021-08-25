@@ -9,7 +9,7 @@ object App {
     const val applicationId = "com.joaogoes.marvelwiki"
 
     object GradlePlugins {
-        const val android = "com.android.tools.build:gradle:7.0.0"
+        const val android = "com.android.tools.build:gradle:7.0.1"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Jetpack.Navigation.Version.navigation}"
         const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.Version.hilt}"
@@ -51,7 +51,7 @@ object Hilt {
     }
 
     const val hilt = "com.google.dagger:hilt-android:${Version.hilt}"
-    const val compiler = "com.google.dagger:hilt-compiler:${Version.hilt}"
+    const val compiler = "com.google.dagger:hilt-android-compiler:${Version.hilt}"
     // For instrumentation tests
     const val instrumentationTest = "com.google.dagger:hilt-android-testing:${Version.hilt}"
     const val instrumentationTestCompiler = "com.google.dagger:hilt-compiler:${Version.hilt}"
@@ -121,7 +121,7 @@ object Retrofit {
 
 object Room {
     object Version {
-        const val room = "2.2.5"
+        const val room = "2.4.0-alpha04"
     }
     const val runtime = "androidx.room:room-runtime:${Version.room}"
     const val compiler = "androidx.room:room-compiler:${Version.room}"

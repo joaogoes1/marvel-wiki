@@ -10,7 +10,9 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
 }
-
+kapt {
+    correctErrorTypes = true
+}
 android {
     compileSdk = App.compileSdk
     buildToolsVersion = App.buildToolsVersion

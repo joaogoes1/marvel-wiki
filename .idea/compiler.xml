@@ -3,17 +3,10 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="marvel-wiki.buildSrc" target="11" />
-      <module name="Marvel_Wiki.app" target="11" />
-      <module name="Marvel_Wiki.buildSrc" target="11" />
       <module name="Marvel_Wiki.characterdetails.impl" target="11" />
       <module name="Marvel_Wiki.characterdetails.public" target="1.8" />
-      <module name="Marvel_Wiki.characters.impl" target="11" />
       <module name="Marvel_Wiki.characterslist.impl" target="11" />
       <module name="Marvel_Wiki.characterslist.public" target="1.8" />
-      <module name="Marvel_Wiki.database" target="11" />
-      <module name="Marvel_Wiki.favorites.impl" target="11" />
-      <module name="Marvel_Wiki.network.internal" target="11" />
-      <module name="Marvel_Wiki.utils" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
