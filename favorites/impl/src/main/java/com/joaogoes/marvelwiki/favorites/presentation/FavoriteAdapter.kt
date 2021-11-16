@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.joaogoes.favorites.R
 import com.joaogoes.favorites.databinding.FavoriteVerticalGridCardItemBinding
+import com.joaogoes.marvelwiki.utils.databinding.loadImage
 
 
 class FavoriteAdapter(
@@ -29,8 +30,8 @@ class FavoriteAdapter(
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
         val item = currentList[position]
         holder.binding.apply {
-            name = item.name
-            imageUrl = item.imageUrl
+            characterLabel.text = item.name
+            characterImage.loadImage(item.imageUrl)
             favoriteButton.setBackgroundResource(R.drawable.ic_star_filled)
             favoriteButton.setOnClickListener { listener.removeSavedFavorite(item) }
             container.setOnClickListener { listener.openCharacter(item.id) }

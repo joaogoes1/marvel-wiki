@@ -7,13 +7,10 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.joaogoes.marvelwiki.presentation.home.HomeFragment"
+        android:name="com.joaogoes.marvelwiki.home.presentation.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
-        <action
-            android:id="@+id/action_homeFragment_to_characterDetailsFragment"
-            app:destination="@id/open_character_details_fragment" />
-    </fragment>
+        tools:layout="@layout/home_fragment"/>
 
-    <include app:graph="@navigation/characters_graph" />
+    <include app:graph="@navigation/characters_graph"/>
+    <include app:graph="@navigation/favorites_graph"/>
 </navigation>

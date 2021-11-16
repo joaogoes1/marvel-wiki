@@ -14,17 +14,18 @@
             app:title="@string/characters_fragment_title"
             app:titleTextColor="@color/red_500"/>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/home_fragment_tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabTextColor="@color/red_500"/>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/home_fragment_view_pager"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            app:defaultNavHost="true" />
+
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/home_bottom_navigation"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
 
     </LinearLayout>
 </layout>

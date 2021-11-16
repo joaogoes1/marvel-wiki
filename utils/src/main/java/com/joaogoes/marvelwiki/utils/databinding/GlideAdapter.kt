@@ -1,5 +1,6 @@
 package com.joaogoes.marvelwiki.utils.databinding
 
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -18,4 +19,15 @@ fun loadImage(
         .error(R.drawable.ic_marvel_logo)
         .dontAnimate()
         .into(view)
+}
+
+fun ImageView.loadImage(imageUrl: String?) {
+    Glide
+        .with(context)
+        .load(imageUrl)
+        .centerCrop()
+        .placeholder(R.drawable.ic_marvel_logo)
+        .error(R.drawable.ic_marvel_logo)
+        .dontAnimate()
+        .into(this)
 }

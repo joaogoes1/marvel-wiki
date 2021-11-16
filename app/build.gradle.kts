@@ -49,7 +49,6 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
-        dataBinding = true
         viewBinding = true
     }
 }
@@ -68,7 +67,6 @@ dependencies {
     implementation(OkHttp.loggingInterceptor)
     implementation(Hilt.hilt)
     implementation(Jetpack.Navigation.featureModule)
-    implementation(Jetpack.Navigation.fragment)
     implementation(Jetpack.Navigation.ui)
     implementation(Material.material)
     implementation(Moshi.codegen)

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/characters_graph"
+    app:startDestination="@id/charactersFragment">
+
+    <fragment
+        android:id="@+id/charactersFragment"
+        android:name="com.joaogoes.marvelwiki.characters.presentation.characterslist.CharactersFragment"
+        android:label="CharactersFragment"
+        tools:layout="@layout/characters_fragment">
+        <action
+            android:id="@+id/action_charactersFragment_to_characterDetailsFragment"
+            app:destination="@id/character_details_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/character_details_fragment"
+        android:name="com.joaogoes.marvelwiki.characters.presentation.details.CharacterDetailsFragment"
+        android:label="CharacterDetailsFragment"
+        tools:layout="@layout/character_details_fragment"/>
+</navigation>

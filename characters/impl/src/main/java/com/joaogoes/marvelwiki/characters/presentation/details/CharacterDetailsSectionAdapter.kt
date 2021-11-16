@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.joaogoes.marvelwiki.characters.data.model.ComicModel
 import com.joaogoes.marvelwiki.characters.data.model.SeriesModel
 import com.joaogoes.marvelwiki.characters.databinding.HorizontalListCardItemBinding
+import com.joaogoes.marvelwiki.utils.databinding.loadImage
 
 class CharacterDetailsSectionAdapter<E, T : CharacterDetailsSectionDiffUtil<E>>(private val diffUtil: T) :
     ListAdapter<E, CharacterDetailsSectionAdapter.CharacterViewHolder>(diffUtil) {
@@ -17,7 +18,13 @@ class CharacterDetailsSectionAdapter<E, T : CharacterDetailsSectionDiffUtil<E>>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CharacterViewHolder(HorizontalListCardItemBinding.inflate(layoutInflater, parent, false))
+        return CharacterViewHolder(
+            HorizontalListCardItemBinding.inflate(
+                layoutInflater,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
@@ -41,10 +48,13 @@ object ComicsDiffUtil : CharacterDetailsSectionDiffUtil<ComicModel>() {
         newItem: ComicModel
     ): Boolean = oldItem == newItem
 
-    override fun bindViewHolder(holder: CharacterDetailsSectionAdapter.CharacterViewHolder, item: ComicModel) {
+    override fun bindViewHolder(
+        holder: CharacterDetailsSectionAdapter.CharacterViewHolder,
+        item: ComicModel
+    ) {
         holder.binding.apply {
-            name = item.name
-            imageUrl = item.resourceURI
+            characterLabel.text = item.name
+            characterImage.loadImage(item.resourceURI)
         }
     }
 }
@@ -60,10 +70,13 @@ object SeriesDiffUtil : CharacterDetailsSectionDiffUtil<SeriesModel>() {
         newItem: SeriesModel
     ): Boolean = oldItem == newItem
 
-    override fun bindViewHolder(holder: CharacterDetailsSectionAdapter.CharacterViewHolder, item: SeriesModel) {
+    override fun bindViewHolder(
+        holder: CharacterDetailsSectionAdapter.CharacterViewHolder,
+        item: SeriesModel
+    ) {
         holder.binding.apply {
-            name = item.name
-            imageUrl = item.resourceURI
+            characterLabel.text = item.name
+            characterImage.loadImage(item.resourceURI)
         }
     }
 }

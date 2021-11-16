@@ -63,11 +63,11 @@ object Hilt {
 object Jetpack {
     object Navigation {
         object Version {
-            const val navigation = "2.3.2"
+            const val navigation = "2.4.0-alpha06"
         }
 
         private const val base = "androidx.navigation"
-        const val fragment = "$base:navigation-fragment-ktx:$${Version.navigation}"
+//        const val fragment = "$base:navigation-fragment-ktx:$${Version.navigation}"
         const val ui = "$base:navigation-ui-ktx:${Version.navigation}"
         const val featureModule = "$base:navigation-dynamic-features-fragment:${Version.navigation}"
     }

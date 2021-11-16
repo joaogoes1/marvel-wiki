@@ -6,7 +6,6 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
 }
 
@@ -63,10 +62,6 @@ dependencies {
     implementation(OkHttp.core)
     implementation(Glide.core)
     implementation(Hilt.hilt)
-    implementation(OkHttp.loggingInterceptor)
-    implementation(Jetpack.Navigation.featureModule)
-    implementation(Jetpack.Navigation.fragment)
-    implementation(Jetpack.Navigation.ui)
     implementation(Material.material)
     implementation(Moshi.codegen)
     implementation(Retrofit.retrofit)

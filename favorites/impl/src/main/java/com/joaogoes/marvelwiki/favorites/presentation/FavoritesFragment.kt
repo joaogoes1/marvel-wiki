@@ -18,8 +18,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FavoritesFragment : Fragment(R.layout.favorite_fragment), FavoritesFragmentListener {
 
-    @Inject
-    lateinit var charactersNavigator: CharactersNavigator
+//    @Inject
+//    lateinit var charactersNavigator: CharactersNavigator
     private val viewModel by viewModels<FavoritesViewModel>()
     private val binding: FavoriteFragmentBinding by viewBinding(FavoriteFragmentBinding::bind)
     private val adapter = FavoriteAdapter(this)
@@ -56,7 +56,7 @@ class FavoritesFragment : Fragment(R.layout.favorite_fragment), FavoritesFragmen
     }
 
     override fun openCharacter(characterId: Int) {
-        charactersNavigator.openCharacterDetails(characterId)
+//        charactersNavigator.openCharacterDetails(characterId)
     }
 
     override fun removeSavedFavorite(favorite: FavoriteModel) {

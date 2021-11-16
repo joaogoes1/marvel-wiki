@@ -10,6 +10,7 @@ import com.joaogoes.marvelwiki.characters.R
 import com.joaogoes.marvelwiki.characters.data.model.CharacterModel
 import com.joaogoes.marvelwiki.characters.databinding.VerticalGridCardItemBinding
 import com.joaogoes.marvelwiki.characters.databinding.VerticalListCardItemBinding
+import com.joaogoes.marvelwiki.utils.databinding.loadImage
 
 
 class CharactersAdapter(
@@ -59,8 +60,8 @@ class CharactersAdapter(
         when (holder) {
             is CharacterViewHolder.CharacterGridViewHolder -> {
                 holder.binding.apply {
-                    name = item.name
-                    imageUrl = item.imageUrl
+                    characterLabel.text = item.name
+                    characterImage.loadImage(item.imageUrl)
                     favoriteButton.setBackgroundResource(getFavoriteIcon(item.isFavorite))
                     favoriteButton.setOnClickListener { listener.saveFavorite(item) }
                     container.setOnClickListener { listener.openCharacter(item.id ?: -1) }
@@ -68,8 +69,8 @@ class CharactersAdapter(
             }
             is CharacterViewHolder.CharacterListViewHolder -> {
                 holder.binding.apply {
-                    name = item.name
-                    imageUrl = item.imageUrl
+                    characterLabel.text = item.name
+                    characterImage.loadImage(item.imageUrl)
                     favoriteButton.setBackgroundResource(getFavoriteIcon(item.isFavorite))
                     favoriteButton.setOnClickListener { listener.saveFavorite(item) }
                     container.setOnClickListener { listener.openCharacter(item.id ?: -1) }

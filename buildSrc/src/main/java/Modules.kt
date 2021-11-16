@@ -6,6 +6,8 @@ object Modules {
     const val favorites = ":favorites"
     const val favoritesPublic = ":favorites:public"
     const val favoritesImpl = ":favorites:impl"
+    const val homeImpl = ":home:impl"
+    const val navigation = ":navigation"
     const val networkPublic = ":network:public"
     const val networkImpl = ":network:internal"
     const val database = ":database"

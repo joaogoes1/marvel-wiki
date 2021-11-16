@@ -7,20 +7,31 @@ import android.net.Network
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
+import androidx.navigation.ui.setupWithNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.joaogoes.marvelwiki.R
+import com.joaogoes.marvelwiki.databinding.ActivityMainBinding
 import com.joaogoes.marvelwiki.receiver.InternetStatusBroadcastReceiver
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
+    private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
     private val connectionBroadcastReceiver = InternetStatusBroadcastReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         observerConnectionState()
+        binding.homeBottomNavigation.setupWithNavController(
+            Navigation.findNavController(
+                this,
+                R.id.nav_host_fragment
+            )
+        )
     }
 
     override fun onStop() {
@@ -35,7 +46,8 @@ class MainActivity : AppCompatActivity() {
             cm.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onLost(network: Network) {
                     super.onLost(network)
-                    Toast.makeText(applicationContext, R.string.no_connection, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, R.string.no_connection, Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
         } else {

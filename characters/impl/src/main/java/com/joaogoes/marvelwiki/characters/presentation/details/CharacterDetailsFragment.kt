@@ -15,13 +15,17 @@ import com.joaogoes.marvelwiki.characters.databinding.CharacterDetailsFragmentBi
 import com.joaogoes.marvelwiki.utils.view.showOnly
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
+import com.joaogoes.marvelwiki.utils.databinding.loadImage
 
 
 @AndroidEntryPoint
 class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
 
     private val viewModel by viewModels<CharacterDetailsViewModel>()
-    private val args by navArgs<CharacterDetailsFragmentArgs>()
+    private val args: CharacterDetailsFragmentArgs by navArgs()
     private val comicsAdapter = CharacterDetailsSectionAdapter(ComicsDiffUtil)
     private val seriesAdapter = CharacterDetailsSectionAdapter(SeriesDiffUtil)
     private val binding: CharacterDetailsFragmentBinding by viewBinding(
@@ -30,11 +34,16 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupMenu()
+        setupToolbar()
         setupRecyclerViews()
         setupTryAgainButton()
         observeState()
         observeCharacter()
         viewModel.loadCharacter(args.characterId)
+    }
+
+    private fun setupToolbar() {
+        (activity as? AppCompatActivity?)?.setSupportActionBar(binding.characterDetailsFragmentToolbar)
     }
 
     private fun setupMenu() {
@@ -54,17 +63,16 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
         }
     }
 
-    @SuppressLint("WrongConstant")
     private fun setupRecyclerViews() {
         val context = requireContext()
-        val orientation = LinearLayoutManager.HORIZONTAL
+        val orientation = RecyclerView.HORIZONTAL
 
         binding.comicsList.apply {
             layoutManager = LinearLayoutManager(context, orientation, false)
             adapter = comicsAdapter
         }
         binding.seriesList.apply {
-            layoutManager = LinearLayoutManager(requireContext(), orientation, false)
+            layoutManager = LinearLayoutManager(context, orientation, false)
             adapter = seriesAdapter
         }
 
@@ -92,10 +100,8 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
 
     private fun observeCharacter() {
         viewModel.viewState.character.observe(viewLifecycleOwner, { character ->
-            binding.apply {
-                name = character?.name ?: ""
-                imageUrl = character?.imageUrl ?: ""
-            }
+            activity?.title = character?.name ?: ""
+            binding.characterDetailsImage.loadImage(character?.imageUrl ?: "")
             updateDescription(character?.description)
             updateComicList(character?.comics)
             updateSeriesList(character?.series)
@@ -104,21 +110,21 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
     }
 
     private fun updateDescription(description: String?) {
-        binding.description = if (description.isNullOrBlank())
+        binding.characterDetailsDescription.text = if (description.isNullOrBlank())
             getString(R.string.characters_details_no_description)
         else
             description
     }
 
     private fun updateComicList(comics: List<ComicModel>?) {
-        binding.comicsList.visibility = if (comics.isNullOrEmpty()) View.GONE else View.VISIBLE
-        binding.comicsListTitle.visibility = if (comics.isNullOrEmpty()) View.GONE else View.VISIBLE
+        binding.comicsList.isVisible = !comics.isNullOrEmpty()
+        binding.comicsListTitle.isVisible = !comics.isNullOrEmpty()
         comicsAdapter.submitList(comics)
     }
 
     private fun updateSeriesList(series: List<SeriesModel>?) {
-        binding.seriesList.visibility = if (series.isNullOrEmpty()) View.GONE else View.VISIBLE
-        binding.seriesListTitle.visibility = if (series.isNullOrEmpty()) View.GONE else View.VISIBLE
+        binding.seriesList.isVisible = !series.isNullOrEmpty()
+        binding.seriesListTitle.isVisible = !series.isNullOrEmpty()
         seriesAdapter.submitList(series)
     }
 
@@ -128,11 +134,11 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
             binding.characterDetailsFragmentToolbar.menu.findItem(R.id.remove_favorite_item)
 
         if (isFavorite) {
-            favoriteItem.isVisible = true
-            removeFavoriteItem.isVisible = false
+            favoriteItem?.setVisible(true)
+            removeFavoriteItem?.setVisible(false)
         } else {
-            favoriteItem.isVisible = false
-            removeFavoriteItem.isVisible = true
+            favoriteItem?.setVisible(false)
+            removeFavoriteItem?.setVisible(true)
         }
     }
 }

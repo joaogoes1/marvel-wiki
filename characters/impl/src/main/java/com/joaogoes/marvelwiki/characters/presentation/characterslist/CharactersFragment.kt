@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,8 +24,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFragmentListener {
 
-    @Inject
-    lateinit var charactersNavigator: CharactersNavigator
     private val viewModel: CharactersViewModel by viewModels()
     private val binding: CharactersFragmentBinding by viewBinding(CharactersFragmentBinding::bind)
     private val adapter = CharactersAdapter(this)
@@ -97,7 +96,8 @@ class CharactersFragment : Fragment(R.layout.characters_fragment), CharactersFra
     }
 
     override fun openCharacter(characterId: Int) {
-        charactersNavigator.openCharacterDetails(characterId)
+        val action = CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailsFragment(characterId)
+        findNavController().navigate(action)
     }
 
     private fun setupTryAgainButton() {
