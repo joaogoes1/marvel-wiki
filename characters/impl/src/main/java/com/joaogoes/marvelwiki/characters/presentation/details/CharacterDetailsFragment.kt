@@ -138,7 +138,7 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
             removeFavoriteItem?.isVisible = false
         } else {
             favoriteItem?.isVisible = false
-            removeFavoriteItem?.isVisible = true
+            removeFavoriteItem?.isVisible = true 
         }
     }
 }
