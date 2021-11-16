@@ -36,7 +36,6 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
         setupRecyclerViews()
         setupTryAgainButton()
         observeState()
-        observeCharacter()
         viewModel.loadCharacter(args.characterId)
     }
 
@@ -86,24 +85,22 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
     }
 
     private fun observeState() {
-        viewModel.viewState.state.observe(viewLifecycleOwner, { state ->
+        viewModel.state.observe(viewLifecycleOwner, { state ->
             when (state) {
-                CharacterDetailsViewState.State.SUCCESS -> binding.showOnly(binding.characterDetailsContainer)
-                CharacterDetailsViewState.State.ERROR -> binding.showOnly(binding.charactersFragmentErrorState.root)
-                CharacterDetailsViewState.State.LOADING -> binding.showOnly(binding.charactersFragmentLoadingState.root)
-                CharacterDetailsViewState.State.NO_CONNECTION -> binding.showOnly(binding.charactersFragmentNoConnectionState.root)
+                is CharacterDetailsViewState.Success -> {
+                    val character = state.characterModel
+                    activity?.title = character.name
+                    binding.characterDetailsImage.loadImage(character.imageUrl ?: "")
+                    updateDescription(character.description)
+                    updateComicList(character.comics)
+                    updateSeriesList(character.series)
+                    updateMenu(character.isFavorite)
+                    binding.showOnly(binding.characterDetailsContainer)
+                }
+                is CharacterDetailsViewState.Error -> binding.showOnly(binding.charactersFragmentErrorState.root)
+                is CharacterDetailsViewState.Loading -> binding.showOnly(binding.charactersFragmentLoadingState.root)
+                is CharacterDetailsViewState.NoConnection -> binding.showOnly(binding.charactersFragmentNoConnectionState.root)
             }
-        })
-    }
-
-    private fun observeCharacter() {
-        viewModel.viewState.character.observe(viewLifecycleOwner, { character ->
-            activity?.title = character?.name ?: ""
-            binding.characterDetailsImage.loadImage(character?.imageUrl ?: "")
-            updateDescription(character?.description)
-            updateComicList(character?.comics)
-            updateSeriesList(character?.series)
-            updateMenu(character?.isFavorite ?: false)
         })
     }
 
@@ -136,7 +133,7 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
             removeFavoriteItem?.isVisible = false
         } else {
             favoriteItem?.isVisible = false
-            removeFavoriteItem?.isVisible = true 
+            removeFavoriteItem?.isVisible = true
         }
     }
 }

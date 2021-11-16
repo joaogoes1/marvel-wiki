@@ -1,5 +1,7 @@
 package com.joaogoes.marvelwiki.characters.presentation.details
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joaogoes.marvelwiki.characters.data.model.CharacterModel
@@ -19,58 +21,59 @@ class CharacterDetailsViewModel @Inject constructor(
     private val saveFavorite: SaveFavoriteUseCase,
     private val removeSavedFavorite: RemoveSavedFavoriteUseCase,
 ) : ViewModel() {
-    val viewState = CharacterDetailsViewState()
+    private val _state =
+        MutableLiveData<CharacterDetailsViewState>(CharacterDetailsViewState.Loading)
+    val state = Transformations.map(_state) { it }
 
     fun loadCharacter(characterId: Int) = viewModelScope.launch {
-        viewState.state.postValue(CharacterDetailsViewState.State.LOADING)
+        _state.postValue(CharacterDetailsViewState.Loading)
         getCharacter(characterId)
             .onSuccess { character ->
-                viewState.character.postValue(character)
-                viewState.state.postValue(CharacterDetailsViewState.State.SUCCESS)
+                _state.postValue(CharacterDetailsViewState.Success(character))
             }
             .onError { error ->
                 if (error is ServiceError.NoConnectionError)
-                    viewState.state.postValue(CharacterDetailsViewState.State.NO_CONNECTION)
+                    _state.postValue(CharacterDetailsViewState.NoConnection)
                 else
-                    viewState.state.postValue(CharacterDetailsViewState.State.ERROR)
-                viewState.character.postValue(null)
+                    _state.postValue(CharacterDetailsViewState.Error)
             }
     }
 
     // TODO: Handle error
-    fun favoriteCharacter() = viewModelScope.launch {
-        viewState.character.value?.let { character ->
-            val id = character.id ?: return@let
-            val name = character.name ?: return@let
-            val imageUrl = character.imageUrl ?: return@let
-            saveFavorite(id, name, imageUrl).onSuccess {
-                handleFavoriteCharacterSuccess(character)
+    fun favoriteCharacter() {
+        val state = state.value
+        viewModelScope.launch {
+            if (state is CharacterDetailsViewState.Success) {
+                val character = state.characterModel
+                val id = character.id ?: return@launch
+                val name = character.name ?: return@launch
+                val imageUrl = character.imageUrl ?: return@launch
+                saveFavorite(id, name, imageUrl).onSuccess {
+                    handleFavoriteCharacterSuccess(character)
+                }
             }
         }
     }
 
     // TODO: Handle error
-    fun removeFavoriteCharacter() = viewModelScope.launch {
-        viewState.character.value?.let { character ->
-            val favorite = FavoriteModel(
-                id = character.id ?: return@let,
-                name = character.name ?: return@let,
-                imageUrl = character.imageUrl ?: return@let
-            )
-            removeSavedFavorite(favorite).onSuccess {
-                handleFavoriteCharacterSuccess(character)
+    fun removeFavoriteCharacter() {
+        val state = state.value
+        viewModelScope.launch {
+            if (state is CharacterDetailsViewState.Success) {
+                val character = state.characterModel
+                val favorite = FavoriteModel(
+                    id = character.id ?: return@launch,
+                    name = character.name ?: return@launch,
+                    imageUrl = character.imageUrl ?: return@launch
+                )
+                removeSavedFavorite(favorite).onSuccess {
+                    handleFavoriteCharacterSuccess(character)
+                }
             }
         }
     }
 
     private fun handleFavoriteCharacterSuccess(character: CharacterModel) {
-        val newCharacter = viewState.character.value?.let {
-            if (it == character) {
-                it.copy(isFavorite = !it.isFavorite)
-            } else {
-                it
-            }
-        }
-        viewState.character.postValue(newCharacter)
+        _state.postValue(CharacterDetailsViewState.Success(character.copy(isFavorite = !character.isFavorite)))
     }
 }

@@ -7,6 +7,7 @@ import android.net.Network
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -21,17 +22,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
     private val connectionBroadcastReceiver = InternetStatusBroadcastReceiver()
+    private val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         observerConnectionState()
-        binding.homeBottomNavigation.setupWithNavController(
-            Navigation.findNavController(
-                this,
-                R.id.nav_host_fragment
-            )
-        )
+        binding.homeBottomNavigation.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.homeBottomNavigation.isVisible = destination.id != R.id.charactersFragment ||
+                destination.id != R.id.favoritesFragment
+        }
     }
 
     override fun onStop() {
@@ -46,8 +47,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             cm.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onLost(network: Network) {
                     super.onLost(network)
-                    Toast.makeText(applicationContext, R.string.no_connection, Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        applicationContext,
+                        R.string.no_connection,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
         } else {
