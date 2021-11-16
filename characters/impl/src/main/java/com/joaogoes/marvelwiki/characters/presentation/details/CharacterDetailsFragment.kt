@@ -134,11 +134,11 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
             binding.characterDetailsFragmentToolbar.menu.findItem(R.id.remove_favorite_item)
 
         if (isFavorite) {
-            favoriteItem?.setVisible(true)
-            removeFavoriteItem?.setVisible(false)
+            favoriteItem?.isVisible = true
+            removeFavoriteItem?.isVisible = false
         } else {
-            favoriteItem?.setVisible(false)
-            removeFavoriteItem?.setVisible(true)
+            favoriteItem?.isVisible = false
+            removeFavoriteItem?.isVisible = true
         }
     }
 }
