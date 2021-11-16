@@ -1,24 +1,22 @@
 package com.joaogoes.marvelwiki.characters.presentation.details
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.joaogoes.marvelwiki.characters.R
 import com.joaogoes.marvelwiki.characters.data.model.ComicModel
 import com.joaogoes.marvelwiki.characters.data.model.SeriesModel
 import com.joaogoes.marvelwiki.characters.databinding.CharacterDetailsFragmentBinding
+import com.joaogoes.marvelwiki.utils.databinding.loadImage
 import com.joaogoes.marvelwiki.utils.view.showOnly
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.RecyclerView
-import com.joaogoes.marvelwiki.utils.databinding.loadImage
 
 
 @AndroidEntryPoint
@@ -138,7 +136,7 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
             removeFavoriteItem?.isVisible = false
         } else {
             favoriteItem?.isVisible = false
-            removeFavoriteItem?.isVisible = true 
+            removeFavoriteItem?.isVisible = true
         }
     }
 }
