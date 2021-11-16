@@ -6,7 +6,7 @@ include(
     ":favorites",
     ":favorites:public",
     ":favorites:impl",
-    ":home:impl",
+    ":navigation",
     ":network",
     ":network:public",
     ":network:internal",
@@ -14,4 +14,3 @@ include(
     ":utils",
 )
 rootProject.name = "Marvel Wiki"
-include(":navigation")

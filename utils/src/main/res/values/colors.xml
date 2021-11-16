@@ -3,7 +3,8 @@
     <color name="red_500">#FF0000</color>
     <color name="red_200">#FF5A36</color>
     <color name="red_700">#C20000</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="light_grey">#D3D3D3</color>
     <color name="transparent">#00000000</color>
 </resources>

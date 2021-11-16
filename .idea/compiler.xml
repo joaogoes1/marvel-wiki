@@ -7,6 +7,7 @@
       <module name="Marvel_Wiki.characterdetails.public" target="1.8" />
       <module name="Marvel_Wiki.characterslist.impl" target="11" />
       <module name="Marvel_Wiki.characterslist.public" target="1.8" />
+      <module name="Marvel_Wiki.home.impl" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

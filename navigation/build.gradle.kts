@@ -81,7 +81,6 @@ dependencies {
     implementation(project(Modules.database))
     implementation(project(Modules.favoritesPublic))
     implementation(project(Modules.favoritesImpl))
-    implementation(project(Modules.homeImpl))
     implementation(project(Modules.networkPublic))
     implementation(project(Modules.networkImpl))
     implementation(project(Modules.utils))

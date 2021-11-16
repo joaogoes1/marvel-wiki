@@ -76,7 +76,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/comics_list"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="wrap_content"
                     android:padding="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/horizontal_list_card_item" />
@@ -93,7 +93,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/series_list"
                     android:layout_width="match_parent"
-                    android:layout_height="208dp"
+                    android:layout_height="wrap_content"
                     android:padding="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/horizontal_list_card_item" />

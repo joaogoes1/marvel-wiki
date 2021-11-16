@@ -26,9 +26,7 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
     private val args: CharacterDetailsFragmentArgs by navArgs()
     private val comicsAdapter = CharacterDetailsSectionAdapter(ComicsDiffUtil)
     private val seriesAdapter = CharacterDetailsSectionAdapter(SeriesDiffUtil)
-    private val binding: CharacterDetailsFragmentBinding by viewBinding(
-        CharacterDetailsFragmentBinding::bind
-    )
+    private val binding by viewBinding(CharacterDetailsFragmentBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupMenu()
